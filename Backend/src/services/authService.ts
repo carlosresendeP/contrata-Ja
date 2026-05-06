@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import { prisma } from "@/config/prisma"; // Ajuste o caminho se seu prisma.ts estiver em outro lugar
+import { prisma } from "@/config/prisma"; 
 import { AppError } from "@/config/error";
 import type { RegisterDTO, LoginDTO } from "../schemas/auth.schema";
 import  jwt  from "jsonwebtoken";
