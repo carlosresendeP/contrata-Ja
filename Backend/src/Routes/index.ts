@@ -3,6 +3,7 @@ import type { FastifyInstance } from "fastify";
 import { authRoutes } from "./auth.routes";
 import { jobRoutes } from "./job.routes";
 import { applicationRoutes } from "./application.routes";
+import { companyRoutes } from "./company.routes";
 
 
 
@@ -18,6 +19,7 @@ async function routes(fastify: FastifyInstance): Promise<void> {
     fastify.register(authRoutes)
     fastify.register(jobRoutes, {prefix: '/jobs'})
     fastify.register(applicationRoutes, {prefix: '/applications'})
+    fastify.register(companyRoutes, {prefix: '/company'})
 }
 
 export default routes;

@@ -46,4 +46,11 @@ export class AuthController {
       token: result.token,
     });
   };
+
+//Get Current User
+  me = async (req: FastifyRequest, reply: FastifyReply) => {
+  const user = await this.authService.getMe(req.user.userId);
+
+  return reply.send({ ok: true, data: user });
+};  
 }

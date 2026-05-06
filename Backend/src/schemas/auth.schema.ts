@@ -13,5 +13,7 @@ export const loginSchema = z.object({
   password: z.string().min(6, "Senha é obrigatória min 6 caracteres"),
 })
 
+
+
 export type RegisterDTO = z.infer<typeof registerSchema>
 export type LoginDTO = z.infer<typeof loginSchema>

@@ -11,13 +11,24 @@ datasource db {
 
 model Company {
   id          String   @id @default(uuid())
+  nome             String?
   razaoSocial String
   cnpj        String   @unique
+
+  // Novos campos para Onboarding e Contexto
+  onboardingStep   Int      @default(1)
+  contextoEmpresa  String?  @db.Text
+  perfilRitmo      String?  // Ex: Acelerado, Analítico
+  valores          String[] // Array de strings para cultura
+  logoUrl          String?
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   users       User[]
   jobs        Job[]
+  applications     Application[]
+  organograma      OrganogramaNode[]
 }
 
 model User {
@@ -49,6 +60,14 @@ model Job {
   requisitos   String?   @db.Text
   salario      Decimal?  @db.Decimal(10, 2)
   status       JobStatus @default(ABERTA)
+
+  // Novos campos para IA e Gestão
+  liderId         String?       // ID do gestor no organograma
+  jdGerada        String?       @db.Text // Descrição otimizada pela IA
+  perfilIdealJson Json?         // Perfil comportamental esperado
+  publicToken     String?       @unique @default(cuid()) // Para link público de inscrição
+  salaryMin       Decimal?      @db.Decimal(10, 2)
+  salaryMax       Decimal?      @db.Decimal(10, 2)
   
   // Relação Multi-tenant: Toda vaga pertence a uma empresa
   companyId    String
@@ -69,9 +88,13 @@ model Candidate {
   email        String        @unique
   telefone     String?
   curriculoUrl String?       // Para o link do PDF/LinkedIn
+
+  respostasJson   Json?         // Respostas brutas dos testes
+  testCompletedAt DateTime?
   
   // Relações
   applications Application[]
+  personality     PersonalityResult?
 
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
@@ -91,6 +114,10 @@ enum ApplicationStatus {
 model Application {
   id          String            @id @default(uuid())
   status      ApplicationStatus @default(PENDENTE)
+
+  // Campos de IA
+  feedbackIA   String?           @db.Text
+  matchScore   Int?
   
   // Relacionamentos
   jobId       String
@@ -101,6 +128,7 @@ model Application {
 
   // Facilitador para o Multi-tenancy (ajuda a listar todos os candidatos da empresa X rápido)
   companyId   String
+  company     Company           @relation(fields: [companyId], references: [id])
 
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
@@ -108,3 +136,42 @@ model Application {
   @@map("applications")
 }
 
+model OrganogramaNode {
+  id        String   @id @default(uuid())
+  nome      String
+  cargo     String
+  parentId  String?  // Para criar a árvore hierárquica
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id])
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@map("organograma_nodes")
+}
+
+model PersonalityResult {
+  id          String    @id @default(uuid())
+  candidateId String    @unique
+  candidate   Candidate @relation(fields: [candidateId], references: [id])
+  disc        String?   // Resultado simplificado DISC
+  eneagrama   String?   // Resultado simplificado Eneagrama
+  rawScore    Json?
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@map("personality_results")
+}
+
+model TestLink {
+  id          String   @id @default(uuid())
+  token       String   @unique
+  applicationId String
+  expiresAt   DateTime
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@map("test_links")
+}

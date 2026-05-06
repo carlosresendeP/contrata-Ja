@@ -5,6 +5,7 @@ import { applyJobSchema } from "../schemas/application.schema";
 import type { ApplyJobDTO } from "../schemas/application.schema";
 import { authMiddleware } from "@/middleware/auth.middleware";
 import { validateSchema } from "@/middleware/validade.schema";
+import { ApplicationStatus } from "@/generated/prisma/enums";
 
 export async function applicationRoutes(app: FastifyInstance) {
   const applicationController = new ApplicationController();
@@ -28,4 +29,22 @@ export async function applicationRoutes(app: FastifyInstance) {
     },
     applicationController.listByCompany
   );
+
+// 3. Listar candidatos de uma vaga específica
+  // Adicionamos <{ Params: { jobId: string } }> para casar com o Controller
+  app.get<{ Params: { jobId: string } }>(
+    "/job/:jobId", 
+    applicationController.listByJob
+  );
+
+  // 4. Mudar status do candidato (Funil)
+  // Tipamos o Params e o Body para aceitar apenas o Enum ApplicationStatus
+  app.patch<{ 
+    Params: { id: string }, 
+    Body: { status: ApplicationStatus } 
+  }>(
+    "/:id/status",
+    applicationController.updateStatus
+  );
+
 }

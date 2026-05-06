@@ -55,7 +55,10 @@ export const ModelName = {
   User: 'User',
   Job: 'Job',
   Candidate: 'Candidate',
-  Application: 'Application'
+  Application: 'Application',
+  OrganogramaNode: 'OrganogramaNode',
+  PersonalityResult: 'PersonalityResult',
+  TestLink: 'TestLink'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -76,8 +79,14 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const CompanyScalarFieldEnum = {
   id: 'id',
+  nome: 'nome',
   razaoSocial: 'razaoSocial',
   cnpj: 'cnpj',
+  onboardingStep: 'onboardingStep',
+  contextoEmpresa: 'contextoEmpresa',
+  perfilRitmo: 'perfilRitmo',
+  valores: 'valores',
+  logoUrl: 'logoUrl',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -105,6 +114,12 @@ export const JobScalarFieldEnum = {
   requisitos: 'requisitos',
   salario: 'salario',
   status: 'status',
+  liderId: 'liderId',
+  jdGerada: 'jdGerada',
+  perfilIdealJson: 'perfilIdealJson',
+  publicToken: 'publicToken',
+  salaryMin: 'salaryMin',
+  salaryMax: 'salaryMax',
   companyId: 'companyId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -119,6 +134,8 @@ export const CandidateScalarFieldEnum = {
   email: 'email',
   telefone: 'telefone',
   curriculoUrl: 'curriculoUrl',
+  respostasJson: 'respostasJson',
+  testCompletedAt: 'testCompletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -129,6 +146,8 @@ export type CandidateScalarFieldEnum = (typeof CandidateScalarFieldEnum)[keyof t
 export const ApplicationScalarFieldEnum = {
   id: 'id',
   status: 'status',
+  feedbackIA: 'feedbackIA',
+  matchScore: 'matchScore',
   jobId: 'jobId',
   candidateId: 'candidateId',
   companyId: 'companyId',
@@ -139,12 +158,58 @@ export const ApplicationScalarFieldEnum = {
 export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
 
 
+export const OrganogramaNodeScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  cargo: 'cargo',
+  parentId: 'parentId',
+  companyId: 'companyId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OrganogramaNodeScalarFieldEnum = (typeof OrganogramaNodeScalarFieldEnum)[keyof typeof OrganogramaNodeScalarFieldEnum]
+
+
+export const PersonalityResultScalarFieldEnum = {
+  id: 'id',
+  candidateId: 'candidateId',
+  disc: 'disc',
+  eneagrama: 'eneagrama',
+  rawScore: 'rawScore',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PersonalityResultScalarFieldEnum = (typeof PersonalityResultScalarFieldEnum)[keyof typeof PersonalityResultScalarFieldEnum]
+
+
+export const TestLinkScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  applicationId: 'applicationId',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TestLinkScalarFieldEnum = (typeof TestLinkScalarFieldEnum)[keyof typeof TestLinkScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -161,4 +226,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

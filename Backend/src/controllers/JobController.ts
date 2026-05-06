@@ -1,6 +1,6 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
 import { JobService } from "../services/JobService";
-import type { CreateJobDTO } from "../schemas/job.schema";
+import type { CreateJobDTO, UpdateJobDTO } from "../schemas/job.schema";
 
 export class JobController {
   private jobService: JobService;
@@ -31,5 +31,19 @@ export class JobController {
     
     return reply.send({ ok: true, data: jobs });
   };
+
+
+  //update
+  update = async (req: FastifyRequest<{ Params: { id: string }, Body: UpdateJobDTO }>, reply: FastifyReply) => {
+  const data = await this.jobService.update(req.params.id, req.user.companyId, req.body);
+  return reply.send({ ok: true, data });
+};
+
+
+  //buscar vaga por id
+  getById = async (req: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) => {
+  const data = await this.jobService.getById(req.params.id, req.user.companyId);
+  return reply.send({ ok: true, data });
+};
 
 }

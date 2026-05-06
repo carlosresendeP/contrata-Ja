@@ -1,6 +1,7 @@
 import { prisma } from "@/config/prisma"; 
 import { AppError } from "@/config/error";
 import { ApplyJobDTO } from "../schemas/application.schema";
+import { ApplicationStatus } from "@/generated/prisma/enums";
 
 export class ApplicationService {
   async apply(data: ApplyJobDTO) {
@@ -77,5 +78,24 @@ export class ApplicationService {
   });
 
   return applications;
+
+
+  }
+async listByJob(jobId: string, companyId: string) {
+  return await prisma.application.findMany({
+    where: { jobId, companyId },
+    include: { candidate: true }
+  });
 }
+
+async updateStatus(id: string, companyId: string, status: ApplicationStatus) {
+  return await prisma.application.update({
+    where: { id, companyId },
+    data: { status }
+  });
+}
+  
+
+
+
 }

@@ -9,4 +9,13 @@ export const createJobSchema = z.object({
   status: z.enum(JobStatus).default("ABERTA"),
 });
 
+export const updateJobSchema = z.object({
+  titulo: z.string().min(3).optional(),
+  descricao: z.string().min(10).optional(),
+  requisitos: z.string().optional(),
+  salario: z.coerce.number().optional(),
+  status: z.enum(JobStatus).optional(),
+});
+
 export type CreateJobDTO = z.infer<typeof createJobSchema>;
+export type UpdateJobDTO = z.infer<typeof updateJobSchema>;

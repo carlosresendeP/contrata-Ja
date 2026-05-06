@@ -2,6 +2,7 @@ import type { FastifyInstance } from "fastify";
 import { AuthController } from "../controllers/AuthController";
 import { registerSchema, loginSchema, type RegisterDTO, type LoginDTO } from "../schemas/auth.schema";
 import { validateSchema } from "@/middleware/validade.schema";
+import { authMiddleware } from "@/middleware/auth.middleware";
 
 export async function authRoutes(app: FastifyInstance) {
   const authController = new AuthController();
@@ -23,4 +24,6 @@ export async function authRoutes(app: FastifyInstance) {
     },
     authController.login
   );
+
+  app.get("/me", { preHandler: [authMiddleware] }, authController.me);
 }

@@ -1,5 +1,5 @@
 import { prisma } from "@/config/prisma";
-import { CreateJobDTO } from "../schemas/job.schema";
+import { CreateJobDTO, UpdateJobDTO } from "../schemas/job.schema";
 import { AppError } from "@/config/error";
 
 export class JobService {
@@ -65,4 +65,22 @@ export class JobService {
 
     return jobs;
   }
+
+
+  //listando vaga por id
+  async getById(id: string, companyId: string) {
+  const job = await prisma.job.findFirst({
+    where: { id, companyId }
+  });
+  if (!job) throw new AppError("Vaga não encontrada", 404);
+  return job;
+}
+
+//update de vaga
+async update(id: string, companyId: string, data: UpdateJobDTO) {
+  return await prisma.job.update({
+    where: { id, companyId }, // Segurança Multi-tenant
+    data
+  });
+}
 }

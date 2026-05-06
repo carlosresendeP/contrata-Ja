@@ -42,3 +42,18 @@ export type Candidate = Prisma.CandidateModel
  * 
  */
 export type Application = Prisma.ApplicationModel
+/**
+ * Model OrganogramaNode
+ * 
+ */
+export type OrganogramaNode = Prisma.OrganogramaNodeModel
+/**
+ * Model PersonalityResult
+ * 
+ */
+export type PersonalityResult = Prisma.PersonalityResultModel
+/**
+ * Model TestLink
+ * 
+ */
+export type TestLink = Prisma.TestLinkModel

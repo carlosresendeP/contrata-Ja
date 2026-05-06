@@ -30,6 +30,7 @@ export type CandidateMinAggregateOutputType = {
   email: string | null
   telefone: string | null
   curriculoUrl: string | null
+  testCompletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -40,6 +41,7 @@ export type CandidateMaxAggregateOutputType = {
   email: string | null
   telefone: string | null
   curriculoUrl: string | null
+  testCompletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,6 +52,8 @@ export type CandidateCountAggregateOutputType = {
   email: number
   telefone: number
   curriculoUrl: number
+  respostasJson: number
+  testCompletedAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -62,6 +66,7 @@ export type CandidateMinAggregateInputType = {
   email?: true
   telefone?: true
   curriculoUrl?: true
+  testCompletedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -72,6 +77,7 @@ export type CandidateMaxAggregateInputType = {
   email?: true
   telefone?: true
   curriculoUrl?: true
+  testCompletedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -82,6 +88,8 @@ export type CandidateCountAggregateInputType = {
   email?: true
   telefone?: true
   curriculoUrl?: true
+  respostasJson?: true
+  testCompletedAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -165,6 +173,8 @@ export type CandidateGroupByOutputType = {
   email: string
   telefone: string | null
   curriculoUrl: string | null
+  respostasJson: runtime.JsonValue | null
+  testCompletedAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: CandidateCountAggregateOutputType | null
@@ -196,9 +206,12 @@ export type CandidateWhereInput = {
   email?: Prisma.StringFilter<"Candidate"> | string
   telefone?: Prisma.StringNullableFilter<"Candidate"> | string | null
   curriculoUrl?: Prisma.StringNullableFilter<"Candidate"> | string | null
+  respostasJson?: Prisma.JsonNullableFilter<"Candidate">
+  testCompletedAt?: Prisma.DateTimeNullableFilter<"Candidate"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Candidate"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Candidate"> | Date | string
   applications?: Prisma.ApplicationListRelationFilter
+  personality?: Prisma.XOR<Prisma.PersonalityResultNullableScalarRelationFilter, Prisma.PersonalityResultWhereInput> | null
 }
 
 export type CandidateOrderByWithRelationInput = {
@@ -207,9 +220,12 @@ export type CandidateOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   telefone?: Prisma.SortOrderInput | Prisma.SortOrder
   curriculoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  respostasJson?: Prisma.SortOrderInput | Prisma.SortOrder
+  testCompletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   applications?: Prisma.ApplicationOrderByRelationAggregateInput
+  personality?: Prisma.PersonalityResultOrderByWithRelationInput
 }
 
 export type CandidateWhereUniqueInput = Prisma.AtLeast<{
@@ -221,9 +237,12 @@ export type CandidateWhereUniqueInput = Prisma.AtLeast<{
   nome?: Prisma.StringFilter<"Candidate"> | string
   telefone?: Prisma.StringNullableFilter<"Candidate"> | string | null
   curriculoUrl?: Prisma.StringNullableFilter<"Candidate"> | string | null
+  respostasJson?: Prisma.JsonNullableFilter<"Candidate">
+  testCompletedAt?: Prisma.DateTimeNullableFilter<"Candidate"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Candidate"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Candidate"> | Date | string
   applications?: Prisma.ApplicationListRelationFilter
+  personality?: Prisma.XOR<Prisma.PersonalityResultNullableScalarRelationFilter, Prisma.PersonalityResultWhereInput> | null
 }, "id" | "email">
 
 export type CandidateOrderByWithAggregationInput = {
@@ -232,6 +251,8 @@ export type CandidateOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   telefone?: Prisma.SortOrderInput | Prisma.SortOrder
   curriculoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  respostasJson?: Prisma.SortOrderInput | Prisma.SortOrder
+  testCompletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.CandidateCountOrderByAggregateInput
@@ -248,6 +269,8 @@ export type CandidateScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"Candidate"> | string
   telefone?: Prisma.StringNullableWithAggregatesFilter<"Candidate"> | string | null
   curriculoUrl?: Prisma.StringNullableWithAggregatesFilter<"Candidate"> | string | null
+  respostasJson?: Prisma.JsonNullableWithAggregatesFilter<"Candidate">
+  testCompletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Candidate"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Candidate"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Candidate"> | Date | string
 }
@@ -258,9 +281,12 @@ export type CandidateCreateInput = {
   email: string
   telefone?: string | null
   curriculoUrl?: string | null
+  respostasJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testCompletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   applications?: Prisma.ApplicationCreateNestedManyWithoutCandidateInput
+  personality?: Prisma.PersonalityResultCreateNestedOneWithoutCandidateInput
 }
 
 export type CandidateUncheckedCreateInput = {
@@ -269,9 +295,12 @@ export type CandidateUncheckedCreateInput = {
   email: string
   telefone?: string | null
   curriculoUrl?: string | null
+  respostasJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testCompletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutCandidateInput
+  personality?: Prisma.PersonalityResultUncheckedCreateNestedOneWithoutCandidateInput
 }
 
 export type CandidateUpdateInput = {
@@ -280,9 +309,12 @@ export type CandidateUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   curriculoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  respostasJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   applications?: Prisma.ApplicationUpdateManyWithoutCandidateNestedInput
+  personality?: Prisma.PersonalityResultUpdateOneWithoutCandidateNestedInput
 }
 
 export type CandidateUncheckedUpdateInput = {
@@ -291,9 +323,12 @@ export type CandidateUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   curriculoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  respostasJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutCandidateNestedInput
+  personality?: Prisma.PersonalityResultUncheckedUpdateOneWithoutCandidateNestedInput
 }
 
 export type CandidateCreateManyInput = {
@@ -302,6 +337,8 @@ export type CandidateCreateManyInput = {
   email: string
   telefone?: string | null
   curriculoUrl?: string | null
+  respostasJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testCompletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -312,6 +349,8 @@ export type CandidateUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   curriculoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  respostasJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -322,6 +361,8 @@ export type CandidateUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   curriculoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  respostasJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -332,6 +373,8 @@ export type CandidateCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   telefone?: Prisma.SortOrder
   curriculoUrl?: Prisma.SortOrder
+  respostasJson?: Prisma.SortOrder
+  testCompletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -342,6 +385,7 @@ export type CandidateMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   telefone?: Prisma.SortOrder
   curriculoUrl?: Prisma.SortOrder
+  testCompletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -352,6 +396,7 @@ export type CandidateMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   telefone?: Prisma.SortOrder
   curriculoUrl?: Prisma.SortOrder
+  testCompletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -359,6 +404,10 @@ export type CandidateMinOrderByAggregateInput = {
 export type CandidateScalarRelationFilter = {
   is?: Prisma.CandidateWhereInput
   isNot?: Prisma.CandidateWhereInput
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type CandidateCreateNestedOneWithoutApplicationsInput = {
@@ -375,14 +424,31 @@ export type CandidateUpdateOneRequiredWithoutApplicationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CandidateUpdateToOneWithWhereWithoutApplicationsInput, Prisma.CandidateUpdateWithoutApplicationsInput>, Prisma.CandidateUncheckedUpdateWithoutApplicationsInput>
 }
 
+export type CandidateCreateNestedOneWithoutPersonalityInput = {
+  create?: Prisma.XOR<Prisma.CandidateCreateWithoutPersonalityInput, Prisma.CandidateUncheckedCreateWithoutPersonalityInput>
+  connectOrCreate?: Prisma.CandidateCreateOrConnectWithoutPersonalityInput
+  connect?: Prisma.CandidateWhereUniqueInput
+}
+
+export type CandidateUpdateOneRequiredWithoutPersonalityNestedInput = {
+  create?: Prisma.XOR<Prisma.CandidateCreateWithoutPersonalityInput, Prisma.CandidateUncheckedCreateWithoutPersonalityInput>
+  connectOrCreate?: Prisma.CandidateCreateOrConnectWithoutPersonalityInput
+  upsert?: Prisma.CandidateUpsertWithoutPersonalityInput
+  connect?: Prisma.CandidateWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CandidateUpdateToOneWithWhereWithoutPersonalityInput, Prisma.CandidateUpdateWithoutPersonalityInput>, Prisma.CandidateUncheckedUpdateWithoutPersonalityInput>
+}
+
 export type CandidateCreateWithoutApplicationsInput = {
   id?: string
   nome: string
   email: string
   telefone?: string | null
   curriculoUrl?: string | null
+  respostasJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testCompletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  personality?: Prisma.PersonalityResultCreateNestedOneWithoutCandidateInput
 }
 
 export type CandidateUncheckedCreateWithoutApplicationsInput = {
@@ -391,8 +457,11 @@ export type CandidateUncheckedCreateWithoutApplicationsInput = {
   email: string
   telefone?: string | null
   curriculoUrl?: string | null
+  respostasJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testCompletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  personality?: Prisma.PersonalityResultUncheckedCreateNestedOneWithoutCandidateInput
 }
 
 export type CandidateCreateOrConnectWithoutApplicationsInput = {
@@ -417,8 +486,11 @@ export type CandidateUpdateWithoutApplicationsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   curriculoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  respostasJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  personality?: Prisma.PersonalityResultUpdateOneWithoutCandidateNestedInput
 }
 
 export type CandidateUncheckedUpdateWithoutApplicationsInput = {
@@ -427,8 +499,79 @@ export type CandidateUncheckedUpdateWithoutApplicationsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   curriculoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  respostasJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  personality?: Prisma.PersonalityResultUncheckedUpdateOneWithoutCandidateNestedInput
+}
+
+export type CandidateCreateWithoutPersonalityInput = {
+  id?: string
+  nome: string
+  email: string
+  telefone?: string | null
+  curriculoUrl?: string | null
+  respostasJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testCompletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  applications?: Prisma.ApplicationCreateNestedManyWithoutCandidateInput
+}
+
+export type CandidateUncheckedCreateWithoutPersonalityInput = {
+  id?: string
+  nome: string
+  email: string
+  telefone?: string | null
+  curriculoUrl?: string | null
+  respostasJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testCompletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutCandidateInput
+}
+
+export type CandidateCreateOrConnectWithoutPersonalityInput = {
+  where: Prisma.CandidateWhereUniqueInput
+  create: Prisma.XOR<Prisma.CandidateCreateWithoutPersonalityInput, Prisma.CandidateUncheckedCreateWithoutPersonalityInput>
+}
+
+export type CandidateUpsertWithoutPersonalityInput = {
+  update: Prisma.XOR<Prisma.CandidateUpdateWithoutPersonalityInput, Prisma.CandidateUncheckedUpdateWithoutPersonalityInput>
+  create: Prisma.XOR<Prisma.CandidateCreateWithoutPersonalityInput, Prisma.CandidateUncheckedCreateWithoutPersonalityInput>
+  where?: Prisma.CandidateWhereInput
+}
+
+export type CandidateUpdateToOneWithWhereWithoutPersonalityInput = {
+  where?: Prisma.CandidateWhereInput
+  data: Prisma.XOR<Prisma.CandidateUpdateWithoutPersonalityInput, Prisma.CandidateUncheckedUpdateWithoutPersonalityInput>
+}
+
+export type CandidateUpdateWithoutPersonalityInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  curriculoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  respostasJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  applications?: Prisma.ApplicationUpdateManyWithoutCandidateNestedInput
+}
+
+export type CandidateUncheckedUpdateWithoutPersonalityInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  curriculoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  respostasJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutCandidateNestedInput
 }
 
 
@@ -468,9 +611,12 @@ export type CandidateSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   email?: boolean
   telefone?: boolean
   curriculoUrl?: boolean
+  respostasJson?: boolean
+  testCompletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   applications?: boolean | Prisma.Candidate$applicationsArgs<ExtArgs>
+  personality?: boolean | Prisma.Candidate$personalityArgs<ExtArgs>
   _count?: boolean | Prisma.CandidateCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["candidate"]>
 
@@ -480,6 +626,8 @@ export type CandidateSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   email?: boolean
   telefone?: boolean
   curriculoUrl?: boolean
+  respostasJson?: boolean
+  testCompletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["candidate"]>
@@ -490,6 +638,8 @@ export type CandidateSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   email?: boolean
   telefone?: boolean
   curriculoUrl?: boolean
+  respostasJson?: boolean
+  testCompletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["candidate"]>
@@ -500,13 +650,16 @@ export type CandidateSelectScalar = {
   email?: boolean
   telefone?: boolean
   curriculoUrl?: boolean
+  respostasJson?: boolean
+  testCompletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CandidateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nome" | "email" | "telefone" | "curriculoUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["candidate"]>
+export type CandidateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nome" | "email" | "telefone" | "curriculoUrl" | "respostasJson" | "testCompletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["candidate"]>
 export type CandidateInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   applications?: boolean | Prisma.Candidate$applicationsArgs<ExtArgs>
+  personality?: boolean | Prisma.Candidate$personalityArgs<ExtArgs>
   _count?: boolean | Prisma.CandidateCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CandidateIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -516,6 +669,7 @@ export type $CandidatePayload<ExtArgs extends runtime.Types.Extensions.InternalA
   name: "Candidate"
   objects: {
     applications: Prisma.$ApplicationPayload<ExtArgs>[]
+    personality: Prisma.$PersonalityResultPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -523,6 +677,8 @@ export type $CandidatePayload<ExtArgs extends runtime.Types.Extensions.InternalA
     email: string
     telefone: string | null
     curriculoUrl: string | null
+    respostasJson: runtime.JsonValue | null
+    testCompletedAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["candidate"]>
@@ -920,6 +1076,7 @@ readonly fields: CandidateFieldRefs;
 export interface Prisma__CandidateClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   applications<T extends Prisma.Candidate$applicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Candidate$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  personality<T extends Prisma.Candidate$personalityArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Candidate$personalityArgs<ExtArgs>>): Prisma.Prisma__PersonalityResultClient<runtime.Types.Result.GetResult<Prisma.$PersonalityResultPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -954,6 +1111,8 @@ export interface CandidateFieldRefs {
   readonly email: Prisma.FieldRef<"Candidate", 'String'>
   readonly telefone: Prisma.FieldRef<"Candidate", 'String'>
   readonly curriculoUrl: Prisma.FieldRef<"Candidate", 'String'>
+  readonly respostasJson: Prisma.FieldRef<"Candidate", 'Json'>
+  readonly testCompletedAt: Prisma.FieldRef<"Candidate", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Candidate", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Candidate", 'DateTime'>
 }
@@ -1370,6 +1529,25 @@ export type Candidate$applicationsArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.ApplicationScalarFieldEnum | Prisma.ApplicationScalarFieldEnum[]
+}
+
+/**
+ * Candidate.personality
+ */
+export type Candidate$personalityArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PersonalityResult
+   */
+  select?: Prisma.PersonalityResultSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PersonalityResult
+   */
+  omit?: Prisma.PersonalityResultOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PersonalityResultInclude<ExtArgs> | null
+  where?: Prisma.PersonalityResultWhereInput
 }
 
 /**

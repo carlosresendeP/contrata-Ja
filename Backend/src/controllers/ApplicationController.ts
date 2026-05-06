@@ -1,6 +1,7 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
 import { ApplicationService } from "../services/ApplicationService";
 import type { ApplyJobDTO } from "../schemas/application.schema";
+import { ApplicationStatus } from "@/generated/prisma/enums";
 
 export class ApplicationController {
   private applicationService: ApplicationService;
@@ -28,5 +29,24 @@ export class ApplicationController {
     ok: true, 
     data: applications 
   });
-};
+  }
+  //update status
+  updateStatus = async (req: FastifyRequest<{ Params: { id: string }, Body: { status: ApplicationStatus } }>, reply: FastifyReply) => {
+    const data = await this.applicationService.updateStatus(req.params.id, req.user.companyId, req.body.status);
+    return reply.send({ ok: true, data });
+  };
+  //listar as aplicações de uma vaga específica
+  listByJob = async (req: FastifyRequest<{ Params: { jobId: string } }>, reply: FastifyReply) => {
+  const applications = await this.applicationService.listByJob(req.params.jobId, req.user.companyId);
+
+  return reply.send({ 
+    ok: true, 
+    data: applications 
+  });
+  };
+  
+
+
+
+
 }

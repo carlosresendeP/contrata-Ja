@@ -28,10 +28,14 @@ export type AggregateJob = {
 
 export type JobAvgAggregateOutputType = {
   salario: runtime.Decimal | null
+  salaryMin: runtime.Decimal | null
+  salaryMax: runtime.Decimal | null
 }
 
 export type JobSumAggregateOutputType = {
   salario: runtime.Decimal | null
+  salaryMin: runtime.Decimal | null
+  salaryMax: runtime.Decimal | null
 }
 
 export type JobMinAggregateOutputType = {
@@ -41,6 +45,11 @@ export type JobMinAggregateOutputType = {
   requisitos: string | null
   salario: runtime.Decimal | null
   status: $Enums.JobStatus | null
+  liderId: string | null
+  jdGerada: string | null
+  publicToken: string | null
+  salaryMin: runtime.Decimal | null
+  salaryMax: runtime.Decimal | null
   companyId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -53,6 +62,11 @@ export type JobMaxAggregateOutputType = {
   requisitos: string | null
   salario: runtime.Decimal | null
   status: $Enums.JobStatus | null
+  liderId: string | null
+  jdGerada: string | null
+  publicToken: string | null
+  salaryMin: runtime.Decimal | null
+  salaryMax: runtime.Decimal | null
   companyId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -65,6 +79,12 @@ export type JobCountAggregateOutputType = {
   requisitos: number
   salario: number
   status: number
+  liderId: number
+  jdGerada: number
+  perfilIdealJson: number
+  publicToken: number
+  salaryMin: number
+  salaryMax: number
   companyId: number
   createdAt: number
   updatedAt: number
@@ -74,10 +94,14 @@ export type JobCountAggregateOutputType = {
 
 export type JobAvgAggregateInputType = {
   salario?: true
+  salaryMin?: true
+  salaryMax?: true
 }
 
 export type JobSumAggregateInputType = {
   salario?: true
+  salaryMin?: true
+  salaryMax?: true
 }
 
 export type JobMinAggregateInputType = {
@@ -87,6 +111,11 @@ export type JobMinAggregateInputType = {
   requisitos?: true
   salario?: true
   status?: true
+  liderId?: true
+  jdGerada?: true
+  publicToken?: true
+  salaryMin?: true
+  salaryMax?: true
   companyId?: true
   createdAt?: true
   updatedAt?: true
@@ -99,6 +128,11 @@ export type JobMaxAggregateInputType = {
   requisitos?: true
   salario?: true
   status?: true
+  liderId?: true
+  jdGerada?: true
+  publicToken?: true
+  salaryMin?: true
+  salaryMax?: true
   companyId?: true
   createdAt?: true
   updatedAt?: true
@@ -111,6 +145,12 @@ export type JobCountAggregateInputType = {
   requisitos?: true
   salario?: true
   status?: true
+  liderId?: true
+  jdGerada?: true
+  perfilIdealJson?: true
+  publicToken?: true
+  salaryMin?: true
+  salaryMax?: true
   companyId?: true
   createdAt?: true
   updatedAt?: true
@@ -210,6 +250,12 @@ export type JobGroupByOutputType = {
   requisitos: string | null
   salario: runtime.Decimal | null
   status: $Enums.JobStatus
+  liderId: string | null
+  jdGerada: string | null
+  perfilIdealJson: runtime.JsonValue | null
+  publicToken: string | null
+  salaryMin: runtime.Decimal | null
+  salaryMax: runtime.Decimal | null
   companyId: string
   createdAt: Date
   updatedAt: Date
@@ -245,6 +291,12 @@ export type JobWhereInput = {
   requisitos?: Prisma.StringNullableFilter<"Job"> | string | null
   salario?: Prisma.DecimalNullableFilter<"Job"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumJobStatusFilter<"Job"> | $Enums.JobStatus
+  liderId?: Prisma.StringNullableFilter<"Job"> | string | null
+  jdGerada?: Prisma.StringNullableFilter<"Job"> | string | null
+  perfilIdealJson?: Prisma.JsonNullableFilter<"Job">
+  publicToken?: Prisma.StringNullableFilter<"Job"> | string | null
+  salaryMin?: Prisma.DecimalNullableFilter<"Job"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salaryMax?: Prisma.DecimalNullableFilter<"Job"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   companyId?: Prisma.StringFilter<"Job"> | string
   createdAt?: Prisma.DateTimeFilter<"Job"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Job"> | Date | string
@@ -259,6 +311,12 @@ export type JobOrderByWithRelationInput = {
   requisitos?: Prisma.SortOrderInput | Prisma.SortOrder
   salario?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  liderId?: Prisma.SortOrderInput | Prisma.SortOrder
+  jdGerada?: Prisma.SortOrderInput | Prisma.SortOrder
+  perfilIdealJson?: Prisma.SortOrderInput | Prisma.SortOrder
+  publicToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  salaryMin?: Prisma.SortOrderInput | Prisma.SortOrder
+  salaryMax?: Prisma.SortOrderInput | Prisma.SortOrder
   companyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -268,6 +326,7 @@ export type JobOrderByWithRelationInput = {
 
 export type JobWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  publicToken?: string
   AND?: Prisma.JobWhereInput | Prisma.JobWhereInput[]
   OR?: Prisma.JobWhereInput[]
   NOT?: Prisma.JobWhereInput | Prisma.JobWhereInput[]
@@ -276,12 +335,17 @@ export type JobWhereUniqueInput = Prisma.AtLeast<{
   requisitos?: Prisma.StringNullableFilter<"Job"> | string | null
   salario?: Prisma.DecimalNullableFilter<"Job"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumJobStatusFilter<"Job"> | $Enums.JobStatus
+  liderId?: Prisma.StringNullableFilter<"Job"> | string | null
+  jdGerada?: Prisma.StringNullableFilter<"Job"> | string | null
+  perfilIdealJson?: Prisma.JsonNullableFilter<"Job">
+  salaryMin?: Prisma.DecimalNullableFilter<"Job"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salaryMax?: Prisma.DecimalNullableFilter<"Job"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   companyId?: Prisma.StringFilter<"Job"> | string
   createdAt?: Prisma.DateTimeFilter<"Job"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Job"> | Date | string
   company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
   applications?: Prisma.ApplicationListRelationFilter
-}, "id">
+}, "id" | "publicToken">
 
 export type JobOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -290,6 +354,12 @@ export type JobOrderByWithAggregationInput = {
   requisitos?: Prisma.SortOrderInput | Prisma.SortOrder
   salario?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  liderId?: Prisma.SortOrderInput | Prisma.SortOrder
+  jdGerada?: Prisma.SortOrderInput | Prisma.SortOrder
+  perfilIdealJson?: Prisma.SortOrderInput | Prisma.SortOrder
+  publicToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  salaryMin?: Prisma.SortOrderInput | Prisma.SortOrder
+  salaryMax?: Prisma.SortOrderInput | Prisma.SortOrder
   companyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -310,6 +380,12 @@ export type JobScalarWhereWithAggregatesInput = {
   requisitos?: Prisma.StringNullableWithAggregatesFilter<"Job"> | string | null
   salario?: Prisma.DecimalNullableWithAggregatesFilter<"Job"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumJobStatusWithAggregatesFilter<"Job"> | $Enums.JobStatus
+  liderId?: Prisma.StringNullableWithAggregatesFilter<"Job"> | string | null
+  jdGerada?: Prisma.StringNullableWithAggregatesFilter<"Job"> | string | null
+  perfilIdealJson?: Prisma.JsonNullableWithAggregatesFilter<"Job">
+  publicToken?: Prisma.StringNullableWithAggregatesFilter<"Job"> | string | null
+  salaryMin?: Prisma.DecimalNullableWithAggregatesFilter<"Job"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salaryMax?: Prisma.DecimalNullableWithAggregatesFilter<"Job"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   companyId?: Prisma.StringWithAggregatesFilter<"Job"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Job"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Job"> | Date | string
@@ -322,6 +398,12 @@ export type JobCreateInput = {
   requisitos?: string | null
   salario?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.JobStatus
+  liderId?: string | null
+  jdGerada?: string | null
+  perfilIdealJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  publicToken?: string | null
+  salaryMin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salaryMax?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   company: Prisma.CompanyCreateNestedOneWithoutJobsInput
@@ -335,6 +417,12 @@ export type JobUncheckedCreateInput = {
   requisitos?: string | null
   salario?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.JobStatus
+  liderId?: string | null
+  jdGerada?: string | null
+  perfilIdealJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  publicToken?: string | null
+  salaryMin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salaryMax?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   companyId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -348,6 +436,12 @@ export type JobUpdateInput = {
   requisitos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   salario?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+  liderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jdGerada?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  perfilIdealJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  publicToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salaryMin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salaryMax?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   company?: Prisma.CompanyUpdateOneRequiredWithoutJobsNestedInput
@@ -361,6 +455,12 @@ export type JobUncheckedUpdateInput = {
   requisitos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   salario?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+  liderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jdGerada?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  perfilIdealJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  publicToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salaryMin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salaryMax?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -374,6 +474,12 @@ export type JobCreateManyInput = {
   requisitos?: string | null
   salario?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.JobStatus
+  liderId?: string | null
+  jdGerada?: string | null
+  perfilIdealJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  publicToken?: string | null
+  salaryMin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salaryMax?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   companyId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -386,6 +492,12 @@ export type JobUpdateManyMutationInput = {
   requisitos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   salario?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+  liderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jdGerada?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  perfilIdealJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  publicToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salaryMin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salaryMax?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -397,6 +509,12 @@ export type JobUncheckedUpdateManyInput = {
   requisitos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   salario?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+  liderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jdGerada?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  perfilIdealJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  publicToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salaryMin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salaryMax?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -419,6 +537,12 @@ export type JobCountOrderByAggregateInput = {
   requisitos?: Prisma.SortOrder
   salario?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  liderId?: Prisma.SortOrder
+  jdGerada?: Prisma.SortOrder
+  perfilIdealJson?: Prisma.SortOrder
+  publicToken?: Prisma.SortOrder
+  salaryMin?: Prisma.SortOrder
+  salaryMax?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -426,6 +550,8 @@ export type JobCountOrderByAggregateInput = {
 
 export type JobAvgOrderByAggregateInput = {
   salario?: Prisma.SortOrder
+  salaryMin?: Prisma.SortOrder
+  salaryMax?: Prisma.SortOrder
 }
 
 export type JobMaxOrderByAggregateInput = {
@@ -435,6 +561,11 @@ export type JobMaxOrderByAggregateInput = {
   requisitos?: Prisma.SortOrder
   salario?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  liderId?: Prisma.SortOrder
+  jdGerada?: Prisma.SortOrder
+  publicToken?: Prisma.SortOrder
+  salaryMin?: Prisma.SortOrder
+  salaryMax?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -447,6 +578,11 @@ export type JobMinOrderByAggregateInput = {
   requisitos?: Prisma.SortOrder
   salario?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  liderId?: Prisma.SortOrder
+  jdGerada?: Prisma.SortOrder
+  publicToken?: Prisma.SortOrder
+  salaryMin?: Prisma.SortOrder
+  salaryMax?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -454,6 +590,8 @@ export type JobMinOrderByAggregateInput = {
 
 export type JobSumOrderByAggregateInput = {
   salario?: Prisma.SortOrder
+  salaryMin?: Prisma.SortOrder
+  salaryMax?: Prisma.SortOrder
 }
 
 export type JobScalarRelationFilter = {
@@ -503,10 +641,6 @@ export type JobUncheckedUpdateManyWithoutCompanyNestedInput = {
   deleteMany?: Prisma.JobScalarWhereInput | Prisma.JobScalarWhereInput[]
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type NullableDecimalFieldUpdateOperationsInput = {
   set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -540,6 +674,12 @@ export type JobCreateWithoutCompanyInput = {
   requisitos?: string | null
   salario?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.JobStatus
+  liderId?: string | null
+  jdGerada?: string | null
+  perfilIdealJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  publicToken?: string | null
+  salaryMin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salaryMax?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   applications?: Prisma.ApplicationCreateNestedManyWithoutJobInput
@@ -552,6 +692,12 @@ export type JobUncheckedCreateWithoutCompanyInput = {
   requisitos?: string | null
   salario?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.JobStatus
+  liderId?: string | null
+  jdGerada?: string | null
+  perfilIdealJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  publicToken?: string | null
+  salaryMin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salaryMax?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutJobInput
@@ -593,6 +739,12 @@ export type JobScalarWhereInput = {
   requisitos?: Prisma.StringNullableFilter<"Job"> | string | null
   salario?: Prisma.DecimalNullableFilter<"Job"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumJobStatusFilter<"Job"> | $Enums.JobStatus
+  liderId?: Prisma.StringNullableFilter<"Job"> | string | null
+  jdGerada?: Prisma.StringNullableFilter<"Job"> | string | null
+  perfilIdealJson?: Prisma.JsonNullableFilter<"Job">
+  publicToken?: Prisma.StringNullableFilter<"Job"> | string | null
+  salaryMin?: Prisma.DecimalNullableFilter<"Job"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salaryMax?: Prisma.DecimalNullableFilter<"Job"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   companyId?: Prisma.StringFilter<"Job"> | string
   createdAt?: Prisma.DateTimeFilter<"Job"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Job"> | Date | string
@@ -605,6 +757,12 @@ export type JobCreateWithoutApplicationsInput = {
   requisitos?: string | null
   salario?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.JobStatus
+  liderId?: string | null
+  jdGerada?: string | null
+  perfilIdealJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  publicToken?: string | null
+  salaryMin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salaryMax?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   company: Prisma.CompanyCreateNestedOneWithoutJobsInput
@@ -617,6 +775,12 @@ export type JobUncheckedCreateWithoutApplicationsInput = {
   requisitos?: string | null
   salario?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.JobStatus
+  liderId?: string | null
+  jdGerada?: string | null
+  perfilIdealJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  publicToken?: string | null
+  salaryMin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salaryMax?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   companyId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -645,6 +809,12 @@ export type JobUpdateWithoutApplicationsInput = {
   requisitos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   salario?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+  liderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jdGerada?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  perfilIdealJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  publicToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salaryMin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salaryMax?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   company?: Prisma.CompanyUpdateOneRequiredWithoutJobsNestedInput
@@ -657,6 +827,12 @@ export type JobUncheckedUpdateWithoutApplicationsInput = {
   requisitos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   salario?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+  liderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jdGerada?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  perfilIdealJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  publicToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salaryMin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salaryMax?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -669,6 +845,12 @@ export type JobCreateManyCompanyInput = {
   requisitos?: string | null
   salario?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.JobStatus
+  liderId?: string | null
+  jdGerada?: string | null
+  perfilIdealJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  publicToken?: string | null
+  salaryMin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salaryMax?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -680,6 +862,12 @@ export type JobUpdateWithoutCompanyInput = {
   requisitos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   salario?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+  liderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jdGerada?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  perfilIdealJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  publicToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salaryMin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salaryMax?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   applications?: Prisma.ApplicationUpdateManyWithoutJobNestedInput
@@ -692,6 +880,12 @@ export type JobUncheckedUpdateWithoutCompanyInput = {
   requisitos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   salario?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+  liderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jdGerada?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  perfilIdealJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  publicToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salaryMin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salaryMax?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutJobNestedInput
@@ -704,6 +898,12 @@ export type JobUncheckedUpdateManyWithoutCompanyInput = {
   requisitos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   salario?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+  liderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jdGerada?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  perfilIdealJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  publicToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salaryMin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salaryMax?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -746,6 +946,12 @@ export type JobSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   requisitos?: boolean
   salario?: boolean
   status?: boolean
+  liderId?: boolean
+  jdGerada?: boolean
+  perfilIdealJson?: boolean
+  publicToken?: boolean
+  salaryMin?: boolean
+  salaryMax?: boolean
   companyId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -761,6 +967,12 @@ export type JobSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   requisitos?: boolean
   salario?: boolean
   status?: boolean
+  liderId?: boolean
+  jdGerada?: boolean
+  perfilIdealJson?: boolean
+  publicToken?: boolean
+  salaryMin?: boolean
+  salaryMax?: boolean
   companyId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -774,6 +986,12 @@ export type JobSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   requisitos?: boolean
   salario?: boolean
   status?: boolean
+  liderId?: boolean
+  jdGerada?: boolean
+  perfilIdealJson?: boolean
+  publicToken?: boolean
+  salaryMin?: boolean
+  salaryMax?: boolean
   companyId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -787,12 +1005,18 @@ export type JobSelectScalar = {
   requisitos?: boolean
   salario?: boolean
   status?: boolean
+  liderId?: boolean
+  jdGerada?: boolean
+  perfilIdealJson?: boolean
+  publicToken?: boolean
+  salaryMin?: boolean
+  salaryMax?: boolean
   companyId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type JobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "titulo" | "descricao" | "requisitos" | "salario" | "status" | "companyId" | "createdAt" | "updatedAt", ExtArgs["result"]["job"]>
+export type JobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "titulo" | "descricao" | "requisitos" | "salario" | "status" | "liderId" | "jdGerada" | "perfilIdealJson" | "publicToken" | "salaryMin" | "salaryMax" | "companyId" | "createdAt" | "updatedAt", ExtArgs["result"]["job"]>
 export type JobInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
   applications?: boolean | Prisma.Job$applicationsArgs<ExtArgs>
@@ -818,6 +1042,12 @@ export type $JobPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     requisitos: string | null
     salario: runtime.Decimal | null
     status: $Enums.JobStatus
+    liderId: string | null
+    jdGerada: string | null
+    perfilIdealJson: runtime.JsonValue | null
+    publicToken: string | null
+    salaryMin: runtime.Decimal | null
+    salaryMax: runtime.Decimal | null
     companyId: string
     createdAt: Date
     updatedAt: Date
@@ -1252,6 +1482,12 @@ export interface JobFieldRefs {
   readonly requisitos: Prisma.FieldRef<"Job", 'String'>
   readonly salario: Prisma.FieldRef<"Job", 'Decimal'>
   readonly status: Prisma.FieldRef<"Job", 'JobStatus'>
+  readonly liderId: Prisma.FieldRef<"Job", 'String'>
+  readonly jdGerada: Prisma.FieldRef<"Job", 'String'>
+  readonly perfilIdealJson: Prisma.FieldRef<"Job", 'Json'>
+  readonly publicToken: Prisma.FieldRef<"Job", 'String'>
+  readonly salaryMin: Prisma.FieldRef<"Job", 'Decimal'>
+  readonly salaryMax: Prisma.FieldRef<"Job", 'Decimal'>
   readonly companyId: Prisma.FieldRef<"Job", 'String'>
   readonly createdAt: Prisma.FieldRef<"Job", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Job", 'DateTime'>

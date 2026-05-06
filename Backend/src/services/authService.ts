@@ -38,7 +38,7 @@ export class AuthService {
     return result;
   }
 
-  // Método para Login
+  // Método para Login  --------------------------
   async login({ email, password }: LoginDTO) {
     // 1. Busca o usuário pelo email
     const user = await prisma.user.findUnique({ where: { email } });
@@ -85,4 +85,32 @@ export class AuthService {
       company, // Retorna os dados da empresa também
     };
   }
+
+
+  // Método para buscar o próprio usuário --------------------------
+  async getMe(userId: string) {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      id: true,
+      nome: true,
+      email: true,
+      role: true,
+      companyId: true,
+      company: {
+        select: {
+          nome: true,
+          onboardingStep: true,
+          logoUrl: true
+        }
+      }
+    }
+  });
+
+  if (!user) {
+    throw new AppError("Usuário não encontrado", 404);
+  }
+
+  return user;
+}
 }
