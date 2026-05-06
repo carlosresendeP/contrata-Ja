@@ -1,15 +1,23 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
   provider = "prisma-client"
-  output   = "../generated/prisma"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+model Company {
+  id          String   @id @default(uuid())
+  razaoSocial String
+  cnpj        String   @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  users       User[]
+  jobs        Job[]
 }
 
 model User {
@@ -21,8 +29,83 @@ model User {
   role      String   @default("admin")
   createdAt DateTime @default(now())
 
+  // Relação obrigatória: Se a empresa for deletada, o usuário também é (Cascade)
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  // Índice para buscas rápidas e seguras por empresa
+  @@index([companyId])
+}
+
+enum JobStatus {
+  ABERTA
+  FECHADA
+  PAUSADA
+}
+
+model Job {
+  id           String    @id @default(uuid())
+  titulo       String
+  descricao    String    @db.Text
+  requisitos   String?   @db.Text
+  salario      Decimal?  @db.Decimal(10, 2)
+  status       JobStatus @default(ABERTA)
+  
+  // Relação Multi-tenant: Toda vaga pertence a uma empresa
+  companyId    String
+  company      Company   @relation(fields: [companyId], references: [id])
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@map("jobs")
+  @@index([companyId, titulo, status])
+  applications Application[]
 
 }
 
 
+model Candidate {
+  id           String        @id @default(uuid())
+  nome         String
+  email        String        @unique
+  telefone     String?
+  curriculoUrl String?       // Para o link do PDF/LinkedIn
+  
+  // Relações
+  applications Application[]
+
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@map("candidates")
+}
+
+enum ApplicationStatus {
+  PENDENTE
+  EM_ANALISE
+  TESTE_PSICOMETRICO
+  ENTREVISTA
+  APROVADO
+  REPROVADO
+}
+
+model Application {
+  id          String            @id @default(uuid())
+  status      ApplicationStatus @default(PENDENTE)
+  
+  // Relacionamentos
+  jobId       String
+  job         Job               @relation(fields: [jobId], references: [id])
+  
+  candidateId String
+  candidate   Candidate         @relation(fields: [candidateId], references: [id])
+
+  // Facilitador para o Multi-tenancy (ajuda a listar todos os candidatos da empresa X rápido)
+  companyId   String
+
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@map("applications")
+}
 

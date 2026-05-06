@@ -1,5 +1,7 @@
 //rotas
 import type { FastifyInstance } from "fastify";
+import { authRoutes } from "./auth.routes";
+import { jobRoutes } from "./job.routes";
 
 
 
@@ -12,8 +14,8 @@ async function routes(fastify: FastifyInstance): Promise<void> {
     })
 
 
-    // fastify.register(categoryRoutes, {prefix: '/categories'})
-    // fastify.register(transitionRoutes, {prefix: '/transactions'})
+    fastify.register(authRoutes)
+    fastify.register(jobRoutes, {prefix: '/jobs'})
 }
 
 export default routes;

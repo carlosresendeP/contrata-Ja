@@ -9,12 +9,13 @@ const envShema = z.object({
     NODE_ENV: z.enum(["dev", "test", "prod"], {
         message: "o Node Env deve ser ,dev, test, ou prod"
     }),
+    JWT_SECRET: z.string().min(10, "Secret Key required"),
 });
 
 const _env = envShema.safeParse(process.env) //safeparse é usado para validar o objeto de ambiente
 
 if (!_env.success) {
-    console.error("🚨 Variaves de ambiente inválidas");
+    console.error("Invalid environment variables!");
     process.exit(1);  // Encerra o processo com erro
 }
 

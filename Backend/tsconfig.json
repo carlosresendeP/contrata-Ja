@@ -1,19 +1,27 @@
 {
-  "compilerOptions": {
-    "target": "ES2022",
-    "module": "CommonJS",
-    "moduleResolution": "node",
-    "outDir": "dist",
-    "rootDir": "src",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "paths": {
-      "@/*": ["./src/*"],
-      "@/generated/*": ["./generated/*"]
-    }
-  },
-  "include": ["src", "prisma"],
-  "exclude": ["node_modules", "dist"]
+
+"compilerOptions": {
+"target": "ES2020",
+"module": "CommonJS",
+"lib": ["ES2020"],
+"outDir": "dist",
+"rootDir": "./src",
+"strict": true,
+"esModuleInterop": true,
+"skipLibCheck": true,
+"forceConsistentCasingInFileNames": true,
+"moduleResolution": "node",
+"resolveJsonModule": true,
+"baseUrl": ".",
+"paths": {
+  "@/*": ["./src/*"],
+  "@/generated/*": ["./generated/*"]
 }
+},
+
+"include": ["./src/**/*"],
+
+"exclude": ["node_modules", "dist"]
+
+}
+
