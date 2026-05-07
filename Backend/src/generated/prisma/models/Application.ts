@@ -248,6 +248,7 @@ export type ApplicationWhereInput = {
   companyId?: Prisma.StringFilter<"Application"> | string
   createdAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Application"> | Date | string
+  testLinks?: Prisma.TestLinkListRelationFilter
   job?: Prisma.XOR<Prisma.JobScalarRelationFilter, Prisma.JobWhereInput>
   candidate?: Prisma.XOR<Prisma.CandidateScalarRelationFilter, Prisma.CandidateWhereInput>
   company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
@@ -263,6 +264,7 @@ export type ApplicationOrderByWithRelationInput = {
   companyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  testLinks?: Prisma.TestLinkOrderByRelationAggregateInput
   job?: Prisma.JobOrderByWithRelationInput
   candidate?: Prisma.CandidateOrderByWithRelationInput
   company?: Prisma.CompanyOrderByWithRelationInput
@@ -281,6 +283,7 @@ export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
   companyId?: Prisma.StringFilter<"Application"> | string
   createdAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Application"> | Date | string
+  testLinks?: Prisma.TestLinkListRelationFilter
   job?: Prisma.XOR<Prisma.JobScalarRelationFilter, Prisma.JobWhereInput>
   candidate?: Prisma.XOR<Prisma.CandidateScalarRelationFilter, Prisma.CandidateWhereInput>
   company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
@@ -325,6 +328,7 @@ export type ApplicationCreateInput = {
   matchScore?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  testLinks?: Prisma.TestLinkCreateNestedManyWithoutApplicationInput
   job: Prisma.JobCreateNestedOneWithoutApplicationsInput
   candidate: Prisma.CandidateCreateNestedOneWithoutApplicationsInput
   company: Prisma.CompanyCreateNestedOneWithoutApplicationsInput
@@ -340,6 +344,7 @@ export type ApplicationUncheckedCreateInput = {
   companyId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  testLinks?: Prisma.TestLinkUncheckedCreateNestedManyWithoutApplicationInput
 }
 
 export type ApplicationUpdateInput = {
@@ -349,6 +354,7 @@ export type ApplicationUpdateInput = {
   matchScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  testLinks?: Prisma.TestLinkUpdateManyWithoutApplicationNestedInput
   job?: Prisma.JobUpdateOneRequiredWithoutApplicationsNestedInput
   candidate?: Prisma.CandidateUpdateOneRequiredWithoutApplicationsNestedInput
   company?: Prisma.CompanyUpdateOneRequiredWithoutApplicationsNestedInput
@@ -364,6 +370,7 @@ export type ApplicationUncheckedUpdateInput = {
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  testLinks?: Prisma.TestLinkUncheckedUpdateManyWithoutApplicationNestedInput
 }
 
 export type ApplicationCreateManyInput = {
@@ -451,6 +458,11 @@ export type ApplicationMinOrderByAggregateInput = {
 
 export type ApplicationSumOrderByAggregateInput = {
   matchScore?: Prisma.SortOrder
+}
+
+export type ApplicationScalarRelationFilter = {
+  is?: Prisma.ApplicationWhereInput
+  isNot?: Prisma.ApplicationWhereInput
 }
 
 export type ApplicationCreateNestedManyWithoutCompanyInput = {
@@ -591,6 +603,20 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type ApplicationCreateNestedOneWithoutTestLinksInput = {
+  create?: Prisma.XOR<Prisma.ApplicationCreateWithoutTestLinksInput, Prisma.ApplicationUncheckedCreateWithoutTestLinksInput>
+  connectOrCreate?: Prisma.ApplicationCreateOrConnectWithoutTestLinksInput
+  connect?: Prisma.ApplicationWhereUniqueInput
+}
+
+export type ApplicationUpdateOneRequiredWithoutTestLinksNestedInput = {
+  create?: Prisma.XOR<Prisma.ApplicationCreateWithoutTestLinksInput, Prisma.ApplicationUncheckedCreateWithoutTestLinksInput>
+  connectOrCreate?: Prisma.ApplicationCreateOrConnectWithoutTestLinksInput
+  upsert?: Prisma.ApplicationUpsertWithoutTestLinksInput
+  connect?: Prisma.ApplicationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ApplicationUpdateToOneWithWhereWithoutTestLinksInput, Prisma.ApplicationUpdateWithoutTestLinksInput>, Prisma.ApplicationUncheckedUpdateWithoutTestLinksInput>
+}
+
 export type ApplicationCreateWithoutCompanyInput = {
   id?: string
   status?: $Enums.ApplicationStatus
@@ -598,6 +624,7 @@ export type ApplicationCreateWithoutCompanyInput = {
   matchScore?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  testLinks?: Prisma.TestLinkCreateNestedManyWithoutApplicationInput
   job: Prisma.JobCreateNestedOneWithoutApplicationsInput
   candidate: Prisma.CandidateCreateNestedOneWithoutApplicationsInput
 }
@@ -611,6 +638,7 @@ export type ApplicationUncheckedCreateWithoutCompanyInput = {
   candidateId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  testLinks?: Prisma.TestLinkUncheckedCreateNestedManyWithoutApplicationInput
 }
 
 export type ApplicationCreateOrConnectWithoutCompanyInput = {
@@ -661,6 +689,7 @@ export type ApplicationCreateWithoutJobInput = {
   matchScore?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  testLinks?: Prisma.TestLinkCreateNestedManyWithoutApplicationInput
   candidate: Prisma.CandidateCreateNestedOneWithoutApplicationsInput
   company: Prisma.CompanyCreateNestedOneWithoutApplicationsInput
 }
@@ -674,6 +703,7 @@ export type ApplicationUncheckedCreateWithoutJobInput = {
   companyId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  testLinks?: Prisma.TestLinkUncheckedCreateNestedManyWithoutApplicationInput
 }
 
 export type ApplicationCreateOrConnectWithoutJobInput = {
@@ -709,6 +739,7 @@ export type ApplicationCreateWithoutCandidateInput = {
   matchScore?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  testLinks?: Prisma.TestLinkCreateNestedManyWithoutApplicationInput
   job: Prisma.JobCreateNestedOneWithoutApplicationsInput
   company: Prisma.CompanyCreateNestedOneWithoutApplicationsInput
 }
@@ -722,6 +753,7 @@ export type ApplicationUncheckedCreateWithoutCandidateInput = {
   companyId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  testLinks?: Prisma.TestLinkUncheckedCreateNestedManyWithoutApplicationInput
 }
 
 export type ApplicationCreateOrConnectWithoutCandidateInput = {
@@ -750,6 +782,70 @@ export type ApplicationUpdateManyWithWhereWithoutCandidateInput = {
   data: Prisma.XOR<Prisma.ApplicationUpdateManyMutationInput, Prisma.ApplicationUncheckedUpdateManyWithoutCandidateInput>
 }
 
+export type ApplicationCreateWithoutTestLinksInput = {
+  id?: string
+  status?: $Enums.ApplicationStatus
+  feedbackIA?: string | null
+  matchScore?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  job: Prisma.JobCreateNestedOneWithoutApplicationsInput
+  candidate: Prisma.CandidateCreateNestedOneWithoutApplicationsInput
+  company: Prisma.CompanyCreateNestedOneWithoutApplicationsInput
+}
+
+export type ApplicationUncheckedCreateWithoutTestLinksInput = {
+  id?: string
+  status?: $Enums.ApplicationStatus
+  feedbackIA?: string | null
+  matchScore?: number | null
+  jobId: string
+  candidateId: string
+  companyId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ApplicationCreateOrConnectWithoutTestLinksInput = {
+  where: Prisma.ApplicationWhereUniqueInput
+  create: Prisma.XOR<Prisma.ApplicationCreateWithoutTestLinksInput, Prisma.ApplicationUncheckedCreateWithoutTestLinksInput>
+}
+
+export type ApplicationUpsertWithoutTestLinksInput = {
+  update: Prisma.XOR<Prisma.ApplicationUpdateWithoutTestLinksInput, Prisma.ApplicationUncheckedUpdateWithoutTestLinksInput>
+  create: Prisma.XOR<Prisma.ApplicationCreateWithoutTestLinksInput, Prisma.ApplicationUncheckedCreateWithoutTestLinksInput>
+  where?: Prisma.ApplicationWhereInput
+}
+
+export type ApplicationUpdateToOneWithWhereWithoutTestLinksInput = {
+  where?: Prisma.ApplicationWhereInput
+  data: Prisma.XOR<Prisma.ApplicationUpdateWithoutTestLinksInput, Prisma.ApplicationUncheckedUpdateWithoutTestLinksInput>
+}
+
+export type ApplicationUpdateWithoutTestLinksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  feedbackIA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  matchScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  job?: Prisma.JobUpdateOneRequiredWithoutApplicationsNestedInput
+  candidate?: Prisma.CandidateUpdateOneRequiredWithoutApplicationsNestedInput
+  company?: Prisma.CompanyUpdateOneRequiredWithoutApplicationsNestedInput
+}
+
+export type ApplicationUncheckedUpdateWithoutTestLinksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  feedbackIA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  matchScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  jobId?: Prisma.StringFieldUpdateOperationsInput | string
+  candidateId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type ApplicationCreateManyCompanyInput = {
   id?: string
   status?: $Enums.ApplicationStatus
@@ -768,6 +864,7 @@ export type ApplicationUpdateWithoutCompanyInput = {
   matchScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  testLinks?: Prisma.TestLinkUpdateManyWithoutApplicationNestedInput
   job?: Prisma.JobUpdateOneRequiredWithoutApplicationsNestedInput
   candidate?: Prisma.CandidateUpdateOneRequiredWithoutApplicationsNestedInput
 }
@@ -781,6 +878,7 @@ export type ApplicationUncheckedUpdateWithoutCompanyInput = {
   candidateId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  testLinks?: Prisma.TestLinkUncheckedUpdateManyWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateManyWithoutCompanyInput = {
@@ -812,6 +910,7 @@ export type ApplicationUpdateWithoutJobInput = {
   matchScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  testLinks?: Prisma.TestLinkUpdateManyWithoutApplicationNestedInput
   candidate?: Prisma.CandidateUpdateOneRequiredWithoutApplicationsNestedInput
   company?: Prisma.CompanyUpdateOneRequiredWithoutApplicationsNestedInput
 }
@@ -825,6 +924,7 @@ export type ApplicationUncheckedUpdateWithoutJobInput = {
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  testLinks?: Prisma.TestLinkUncheckedUpdateManyWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateManyWithoutJobInput = {
@@ -856,6 +956,7 @@ export type ApplicationUpdateWithoutCandidateInput = {
   matchScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  testLinks?: Prisma.TestLinkUpdateManyWithoutApplicationNestedInput
   job?: Prisma.JobUpdateOneRequiredWithoutApplicationsNestedInput
   company?: Prisma.CompanyUpdateOneRequiredWithoutApplicationsNestedInput
 }
@@ -869,6 +970,7 @@ export type ApplicationUncheckedUpdateWithoutCandidateInput = {
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  testLinks?: Prisma.TestLinkUncheckedUpdateManyWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateManyWithoutCandidateInput = {
@@ -883,6 +985,35 @@ export type ApplicationUncheckedUpdateManyWithoutCandidateInput = {
 }
 
 
+/**
+ * Count Type ApplicationCountOutputType
+ */
+
+export type ApplicationCountOutputType = {
+  testLinks: number
+}
+
+export type ApplicationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  testLinks?: boolean | ApplicationCountOutputTypeCountTestLinksArgs
+}
+
+/**
+ * ApplicationCountOutputType without action
+ */
+export type ApplicationCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ApplicationCountOutputType
+   */
+  select?: Prisma.ApplicationCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ApplicationCountOutputType without action
+ */
+export type ApplicationCountOutputTypeCountTestLinksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TestLinkWhereInput
+}
+
 
 export type ApplicationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -894,9 +1025,11 @@ export type ApplicationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   companyId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  testLinks?: boolean | Prisma.Application$testLinksArgs<ExtArgs>
   job?: boolean | Prisma.JobDefaultArgs<ExtArgs>
   candidate?: boolean | Prisma.CandidateDefaultArgs<ExtArgs>
   company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
+  _count?: boolean | Prisma.ApplicationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["application"]>
 
 export type ApplicationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -943,9 +1076,11 @@ export type ApplicationSelectScalar = {
 
 export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "status" | "feedbackIA" | "matchScore" | "jobId" | "candidateId" | "companyId" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
 export type ApplicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  testLinks?: boolean | Prisma.Application$testLinksArgs<ExtArgs>
   job?: boolean | Prisma.JobDefaultArgs<ExtArgs>
   candidate?: boolean | Prisma.CandidateDefaultArgs<ExtArgs>
   company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
+  _count?: boolean | Prisma.ApplicationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ApplicationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   job?: boolean | Prisma.JobDefaultArgs<ExtArgs>
@@ -961,6 +1096,7 @@ export type ApplicationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.
 export type $ApplicationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Application"
   objects: {
+    testLinks: Prisma.$TestLinkPayload<ExtArgs>[]
     job: Prisma.$JobPayload<ExtArgs>
     candidate: Prisma.$CandidatePayload<ExtArgs>
     company: Prisma.$CompanyPayload<ExtArgs>
@@ -1369,6 +1505,7 @@ readonly fields: ApplicationFieldRefs;
  */
 export interface Prisma__ApplicationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  testLinks<T extends Prisma.Application$testLinksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Application$testLinksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TestLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   job<T extends Prisma.JobDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.JobDefaultArgs<ExtArgs>>): Prisma.Prisma__JobClient<runtime.Types.Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   candidate<T extends Prisma.CandidateDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CandidateDefaultArgs<ExtArgs>>): Prisma.Prisma__CandidateClient<runtime.Types.Result.GetResult<Prisma.$CandidatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   company<T extends Prisma.CompanyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CompanyDefaultArgs<ExtArgs>>): Prisma.Prisma__CompanyClient<runtime.Types.Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -1808,6 +1945,30 @@ export type ApplicationDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many Applications to delete.
    */
   limit?: number
+}
+
+/**
+ * Application.testLinks
+ */
+export type Application$testLinksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TestLink
+   */
+  select?: Prisma.TestLinkSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TestLink
+   */
+  omit?: Prisma.TestLinkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TestLinkInclude<ExtArgs> | null
+  where?: Prisma.TestLinkWhereInput
+  orderBy?: Prisma.TestLinkOrderByWithRelationInput | Prisma.TestLinkOrderByWithRelationInput[]
+  cursor?: Prisma.TestLinkWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TestLinkScalarFieldEnum | Prisma.TestLinkScalarFieldEnum[]
 }
 
 /**

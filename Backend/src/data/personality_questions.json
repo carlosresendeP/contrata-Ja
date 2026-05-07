@@ -1,0 +1,98 @@
+[
+  {
+    "id": "p1",
+    "text": "Após uma semana cansativa, você prefere:",
+    "options": [
+      { "value": "E", "text": "Sair com amigos e conhecer gente nova." },
+      { "value": "I", "text": "Ficar em casa relaxando com um bom livro ou filme." }
+    ]
+  },
+  {
+    "id": "p2",
+    "text": "Ao tomar uma decisão importante, você foca mais em:",
+    "options": [
+      { "value": "T", "text": "Lógica, fatos e critérios objetivos." },
+      { "value": "F", "text": "Valores pessoais e no impacto nas pessoas." }
+    ]
+  },
+  {
+    "id": "p3",
+    "text": "Quando recebe uma tarefa, sua abordagem é:",
+    "options": [
+      { "value": "J", "text": "Planejar e organizar as etapas com antecedência." },
+      { "value": "P", "text": "Começar logo e adaptar o caminho conforme surge." }
+    ]
+  },
+  {
+    "id": "p4",
+    "text": "Em conversas, você costuma:",
+    "options": [
+      { "value": "E", "text": "Interagir bastante e se envolver na conversa." },
+      { "value": "I", "text": "Ouvir mais e falar quando tem algo relevante a acrescentar." }
+    ]
+  },
+  {
+    "id": "p5",
+    "text": "Ao enfrentar um problema complexo, você prefere:",
+    "options": [
+      { "value": "N", "text": "Buscar novas perspectivas e possibilidades." },
+      { "value": "S", "text": "Focar em soluções práticas e testadas." }
+    ]
+  },
+  {
+    "id": "p6",
+    "text": "Em situações sociais, você:",
+    "options": [
+      { "value": "F", "text": "Busca criar conexão e bem-estar no grupo." },
+      { "value": "T", "text": "Age de forma mais reservada e objetiva." }
+    ]
+  },
+  {
+    "id": "p7",
+    "text": "Você se sente mais motivado quando:",
+    "options": [
+      { "value": "S", "text": "Segue uma rotina estabelecida e sabe o que esperar." },
+      { "value": "N", "text": "Pode explorar novas ideias e possibilidades." }
+    ]
+  },
+  {
+    "id": "p8",
+    "text": "Ao lidar com críticas, você:",
+    "options": [
+      { "value": "I", "text": "Reflete por um tempo antes de responder." },
+      { "value": "E", "text": "Responde de forma mais imediata e interativa." }
+    ]
+  },
+  {
+    "id": "p9",
+    "text": "Em projetos, você gosta mais de:",
+    "options": [
+      { "value": "P", "text": "Explorar diferentes abordagens e improvisar." },
+      { "value": "J", "text": "Definir um plano e segui-lo com consistência." }
+    ]
+  },
+  {
+    "id": "p10",
+    "text": "Em um trabalho em equipe, você tende a:",
+    "options": [
+      { "value": "T", "text": "Focar na tarefa e na eficiência da execução." },
+      { "value": "F", "text": "Se importar com o clima e o bem-estar do time." }
+    ]
+  },
+  {
+    "id": "p11",
+    "text": "Você se considera alguém que:",
+    "options": [
+      { "value": "E", "text": "Ganha energia estando perto de pessoas." },
+      { "value": "I", "text": "Recarrega as energias passando tempo sozinho." }
+    ]
+  },
+  {
+    "id": "p12",
+    "text": "Ao analisar informações, você tende a:",
+    "options": [
+      { "value": "S", "text": "Acreditar no que é concreto e factual." },
+      { "value": "N", "text": "Pensar em teorias, padrões e possibilidades futuras." }
+    ]
+  }
+]

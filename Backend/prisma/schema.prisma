@@ -118,7 +118,9 @@ model Application {
   // Campos de IA
   feedbackIA   String?           @db.Text
   matchScore   Int?
-  
+
+  testLinks    TestLink[]
+
   // Relacionamentos
   jobId       String
   job         Job               @relation(fields: [jobId], references: [id])
@@ -165,10 +167,11 @@ model PersonalityResult {
 }
 
 model TestLink {
-  id          String   @id @default(uuid())
-  token       String   @unique
+  id            String      @id @default(uuid())
+  token         String      @unique
   applicationId String
-  expiresAt   DateTime
+  application   Application @relation(fields: [applicationId], references: [id])
+  expiresAt     DateTime
 
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt

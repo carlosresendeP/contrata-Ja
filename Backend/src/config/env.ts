@@ -10,6 +10,7 @@ const envShema = z.object({
         message: "o Node Env deve ser ,dev, test, ou prod"
     }),
     JWT_SECRET: z.string().min(10, "Secret Key required"),
+    APP_URL: z.string().default("http://localhost:3001/api"),
 });
 
 const _env = envShema.safeParse(process.env) //safeparse é usado para validar o objeto de ambiente

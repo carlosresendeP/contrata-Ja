@@ -47,4 +47,11 @@ export async function applicationRoutes(app: FastifyInstance) {
     applicationController.updateStatus
   );
 
+  // 5. Gerar link de teste psicométrico para uma candidatura
+  app.post<{ Params: { id: string } }>(
+    "/:id/test-link",
+    { preHandler: [authMiddleware] },
+    applicationController.createTestLink
+  );
+
 }

@@ -190,6 +190,7 @@ export type TestLinkWhereInput = {
   expiresAt?: Prisma.DateTimeFilter<"TestLink"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"TestLink"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TestLink"> | Date | string
+  application?: Prisma.XOR<Prisma.ApplicationScalarRelationFilter, Prisma.ApplicationWhereInput>
 }
 
 export type TestLinkOrderByWithRelationInput = {
@@ -199,6 +200,7 @@ export type TestLinkOrderByWithRelationInput = {
   expiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  application?: Prisma.ApplicationOrderByWithRelationInput
 }
 
 export type TestLinkWhereUniqueInput = Prisma.AtLeast<{
@@ -211,6 +213,7 @@ export type TestLinkWhereUniqueInput = Prisma.AtLeast<{
   expiresAt?: Prisma.DateTimeFilter<"TestLink"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"TestLink"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TestLink"> | Date | string
+  application?: Prisma.XOR<Prisma.ApplicationScalarRelationFilter, Prisma.ApplicationWhereInput>
 }, "id" | "token">
 
 export type TestLinkOrderByWithAggregationInput = {
@@ -240,10 +243,10 @@ export type TestLinkScalarWhereWithAggregatesInput = {
 export type TestLinkCreateInput = {
   id?: string
   token: string
-  applicationId: string
   expiresAt: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  application: Prisma.ApplicationCreateNestedOneWithoutTestLinksInput
 }
 
 export type TestLinkUncheckedCreateInput = {
@@ -258,10 +261,10 @@ export type TestLinkUncheckedCreateInput = {
 export type TestLinkUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.StringFieldUpdateOperationsInput | string
-  applicationId?: Prisma.StringFieldUpdateOperationsInput | string
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  application?: Prisma.ApplicationUpdateOneRequiredWithoutTestLinksNestedInput
 }
 
 export type TestLinkUncheckedUpdateInput = {
@@ -285,7 +288,6 @@ export type TestLinkCreateManyInput = {
 export type TestLinkUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   token?: Prisma.StringFieldUpdateOperationsInput | string
-  applicationId?: Prisma.StringFieldUpdateOperationsInput | string
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -298,6 +300,16 @@ export type TestLinkUncheckedUpdateManyInput = {
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type TestLinkListRelationFilter = {
+  every?: Prisma.TestLinkWhereInput
+  some?: Prisma.TestLinkWhereInput
+  none?: Prisma.TestLinkWhereInput
+}
+
+export type TestLinkOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type TestLinkCountOrderByAggregateInput = {
@@ -327,6 +339,134 @@ export type TestLinkMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type TestLinkCreateNestedManyWithoutApplicationInput = {
+  create?: Prisma.XOR<Prisma.TestLinkCreateWithoutApplicationInput, Prisma.TestLinkUncheckedCreateWithoutApplicationInput> | Prisma.TestLinkCreateWithoutApplicationInput[] | Prisma.TestLinkUncheckedCreateWithoutApplicationInput[]
+  connectOrCreate?: Prisma.TestLinkCreateOrConnectWithoutApplicationInput | Prisma.TestLinkCreateOrConnectWithoutApplicationInput[]
+  createMany?: Prisma.TestLinkCreateManyApplicationInputEnvelope
+  connect?: Prisma.TestLinkWhereUniqueInput | Prisma.TestLinkWhereUniqueInput[]
+}
+
+export type TestLinkUncheckedCreateNestedManyWithoutApplicationInput = {
+  create?: Prisma.XOR<Prisma.TestLinkCreateWithoutApplicationInput, Prisma.TestLinkUncheckedCreateWithoutApplicationInput> | Prisma.TestLinkCreateWithoutApplicationInput[] | Prisma.TestLinkUncheckedCreateWithoutApplicationInput[]
+  connectOrCreate?: Prisma.TestLinkCreateOrConnectWithoutApplicationInput | Prisma.TestLinkCreateOrConnectWithoutApplicationInput[]
+  createMany?: Prisma.TestLinkCreateManyApplicationInputEnvelope
+  connect?: Prisma.TestLinkWhereUniqueInput | Prisma.TestLinkWhereUniqueInput[]
+}
+
+export type TestLinkUpdateManyWithoutApplicationNestedInput = {
+  create?: Prisma.XOR<Prisma.TestLinkCreateWithoutApplicationInput, Prisma.TestLinkUncheckedCreateWithoutApplicationInput> | Prisma.TestLinkCreateWithoutApplicationInput[] | Prisma.TestLinkUncheckedCreateWithoutApplicationInput[]
+  connectOrCreate?: Prisma.TestLinkCreateOrConnectWithoutApplicationInput | Prisma.TestLinkCreateOrConnectWithoutApplicationInput[]
+  upsert?: Prisma.TestLinkUpsertWithWhereUniqueWithoutApplicationInput | Prisma.TestLinkUpsertWithWhereUniqueWithoutApplicationInput[]
+  createMany?: Prisma.TestLinkCreateManyApplicationInputEnvelope
+  set?: Prisma.TestLinkWhereUniqueInput | Prisma.TestLinkWhereUniqueInput[]
+  disconnect?: Prisma.TestLinkWhereUniqueInput | Prisma.TestLinkWhereUniqueInput[]
+  delete?: Prisma.TestLinkWhereUniqueInput | Prisma.TestLinkWhereUniqueInput[]
+  connect?: Prisma.TestLinkWhereUniqueInput | Prisma.TestLinkWhereUniqueInput[]
+  update?: Prisma.TestLinkUpdateWithWhereUniqueWithoutApplicationInput | Prisma.TestLinkUpdateWithWhereUniqueWithoutApplicationInput[]
+  updateMany?: Prisma.TestLinkUpdateManyWithWhereWithoutApplicationInput | Prisma.TestLinkUpdateManyWithWhereWithoutApplicationInput[]
+  deleteMany?: Prisma.TestLinkScalarWhereInput | Prisma.TestLinkScalarWhereInput[]
+}
+
+export type TestLinkUncheckedUpdateManyWithoutApplicationNestedInput = {
+  create?: Prisma.XOR<Prisma.TestLinkCreateWithoutApplicationInput, Prisma.TestLinkUncheckedCreateWithoutApplicationInput> | Prisma.TestLinkCreateWithoutApplicationInput[] | Prisma.TestLinkUncheckedCreateWithoutApplicationInput[]
+  connectOrCreate?: Prisma.TestLinkCreateOrConnectWithoutApplicationInput | Prisma.TestLinkCreateOrConnectWithoutApplicationInput[]
+  upsert?: Prisma.TestLinkUpsertWithWhereUniqueWithoutApplicationInput | Prisma.TestLinkUpsertWithWhereUniqueWithoutApplicationInput[]
+  createMany?: Prisma.TestLinkCreateManyApplicationInputEnvelope
+  set?: Prisma.TestLinkWhereUniqueInput | Prisma.TestLinkWhereUniqueInput[]
+  disconnect?: Prisma.TestLinkWhereUniqueInput | Prisma.TestLinkWhereUniqueInput[]
+  delete?: Prisma.TestLinkWhereUniqueInput | Prisma.TestLinkWhereUniqueInput[]
+  connect?: Prisma.TestLinkWhereUniqueInput | Prisma.TestLinkWhereUniqueInput[]
+  update?: Prisma.TestLinkUpdateWithWhereUniqueWithoutApplicationInput | Prisma.TestLinkUpdateWithWhereUniqueWithoutApplicationInput[]
+  updateMany?: Prisma.TestLinkUpdateManyWithWhereWithoutApplicationInput | Prisma.TestLinkUpdateManyWithWhereWithoutApplicationInput[]
+  deleteMany?: Prisma.TestLinkScalarWhereInput | Prisma.TestLinkScalarWhereInput[]
+}
+
+export type TestLinkCreateWithoutApplicationInput = {
+  id?: string
+  token: string
+  expiresAt: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type TestLinkUncheckedCreateWithoutApplicationInput = {
+  id?: string
+  token: string
+  expiresAt: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type TestLinkCreateOrConnectWithoutApplicationInput = {
+  where: Prisma.TestLinkWhereUniqueInput
+  create: Prisma.XOR<Prisma.TestLinkCreateWithoutApplicationInput, Prisma.TestLinkUncheckedCreateWithoutApplicationInput>
+}
+
+export type TestLinkCreateManyApplicationInputEnvelope = {
+  data: Prisma.TestLinkCreateManyApplicationInput | Prisma.TestLinkCreateManyApplicationInput[]
+  skipDuplicates?: boolean
+}
+
+export type TestLinkUpsertWithWhereUniqueWithoutApplicationInput = {
+  where: Prisma.TestLinkWhereUniqueInput
+  update: Prisma.XOR<Prisma.TestLinkUpdateWithoutApplicationInput, Prisma.TestLinkUncheckedUpdateWithoutApplicationInput>
+  create: Prisma.XOR<Prisma.TestLinkCreateWithoutApplicationInput, Prisma.TestLinkUncheckedCreateWithoutApplicationInput>
+}
+
+export type TestLinkUpdateWithWhereUniqueWithoutApplicationInput = {
+  where: Prisma.TestLinkWhereUniqueInput
+  data: Prisma.XOR<Prisma.TestLinkUpdateWithoutApplicationInput, Prisma.TestLinkUncheckedUpdateWithoutApplicationInput>
+}
+
+export type TestLinkUpdateManyWithWhereWithoutApplicationInput = {
+  where: Prisma.TestLinkScalarWhereInput
+  data: Prisma.XOR<Prisma.TestLinkUpdateManyMutationInput, Prisma.TestLinkUncheckedUpdateManyWithoutApplicationInput>
+}
+
+export type TestLinkScalarWhereInput = {
+  AND?: Prisma.TestLinkScalarWhereInput | Prisma.TestLinkScalarWhereInput[]
+  OR?: Prisma.TestLinkScalarWhereInput[]
+  NOT?: Prisma.TestLinkScalarWhereInput | Prisma.TestLinkScalarWhereInput[]
+  id?: Prisma.StringFilter<"TestLink"> | string
+  token?: Prisma.StringFilter<"TestLink"> | string
+  applicationId?: Prisma.StringFilter<"TestLink"> | string
+  expiresAt?: Prisma.DateTimeFilter<"TestLink"> | Date | string
+  createdAt?: Prisma.DateTimeFilter<"TestLink"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"TestLink"> | Date | string
+}
+
+export type TestLinkCreateManyApplicationInput = {
+  id?: string
+  token: string
+  expiresAt: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type TestLinkUpdateWithoutApplicationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  token?: Prisma.StringFieldUpdateOperationsInput | string
+  expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type TestLinkUncheckedUpdateWithoutApplicationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  token?: Prisma.StringFieldUpdateOperationsInput | string
+  expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type TestLinkUncheckedUpdateManyWithoutApplicationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  token?: Prisma.StringFieldUpdateOperationsInput | string
+  expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 
 
 export type TestLinkSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -336,6 +476,7 @@ export type TestLinkSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   expiresAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  application?: boolean | Prisma.ApplicationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["testLink"]>
 
 export type TestLinkSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -345,6 +486,7 @@ export type TestLinkSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   expiresAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  application?: boolean | Prisma.ApplicationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["testLink"]>
 
 export type TestLinkSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -354,6 +496,7 @@ export type TestLinkSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   expiresAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  application?: boolean | Prisma.ApplicationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["testLink"]>
 
 export type TestLinkSelectScalar = {
@@ -366,10 +509,21 @@ export type TestLinkSelectScalar = {
 }
 
 export type TestLinkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "token" | "applicationId" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["testLink"]>
+export type TestLinkInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  application?: boolean | Prisma.ApplicationDefaultArgs<ExtArgs>
+}
+export type TestLinkIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  application?: boolean | Prisma.ApplicationDefaultArgs<ExtArgs>
+}
+export type TestLinkIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  application?: boolean | Prisma.ApplicationDefaultArgs<ExtArgs>
+}
 
 export type $TestLinkPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "TestLink"
-  objects: {}
+  objects: {
+    application: Prisma.$ApplicationPayload<ExtArgs>
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     token: string
@@ -771,6 +925,7 @@ readonly fields: TestLinkFieldRefs;
  */
 export interface Prisma__TestLinkClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  application<T extends Prisma.ApplicationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ApplicationDefaultArgs<ExtArgs>>): Prisma.Prisma__ApplicationClient<runtime.Types.Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -823,6 +978,10 @@ export type TestLinkFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Inte
    */
   omit?: Prisma.TestLinkOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TestLinkInclude<ExtArgs> | null
+  /**
    * Filter, which TestLink to fetch.
    */
   where: Prisma.TestLinkWhereUniqueInput
@@ -841,6 +1000,10 @@ export type TestLinkFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.TestLinkOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TestLinkInclude<ExtArgs> | null
+  /**
    * Filter, which TestLink to fetch.
    */
   where: Prisma.TestLinkWhereUniqueInput
@@ -858,6 +1021,10 @@ export type TestLinkFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the TestLink
    */
   omit?: Prisma.TestLinkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TestLinkInclude<ExtArgs> | null
   /**
    * Filter, which TestLink to fetch.
    */
@@ -907,6 +1074,10 @@ export type TestLinkFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.TestLinkOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TestLinkInclude<ExtArgs> | null
+  /**
    * Filter, which TestLink to fetch.
    */
   where?: Prisma.TestLinkWhereInput
@@ -954,6 +1125,10 @@ export type TestLinkFindManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the TestLink
    */
   omit?: Prisma.TestLinkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TestLinkInclude<ExtArgs> | null
   /**
    * Filter, which TestLinks to fetch.
    */
@@ -1003,6 +1178,10 @@ export type TestLinkCreateArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.TestLinkOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TestLinkInclude<ExtArgs> | null
+  /**
    * The data needed to create a TestLink.
    */
   data: Prisma.XOR<Prisma.TestLinkCreateInput, Prisma.TestLinkUncheckedCreateInput>
@@ -1036,6 +1215,10 @@ export type TestLinkCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extens
    */
   data: Prisma.TestLinkCreateManyInput | Prisma.TestLinkCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TestLinkIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1050,6 +1233,10 @@ export type TestLinkUpdateArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the TestLink
    */
   omit?: Prisma.TestLinkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TestLinkInclude<ExtArgs> | null
   /**
    * The data needed to update a TestLink.
    */
@@ -1102,6 +1289,10 @@ export type TestLinkUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extens
    * Limit how many TestLinks to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TestLinkIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1116,6 +1307,10 @@ export type TestLinkUpsertArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the TestLink
    */
   omit?: Prisma.TestLinkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TestLinkInclude<ExtArgs> | null
   /**
    * The filter to search for the TestLink to update in case it exists.
    */
@@ -1142,6 +1337,10 @@ export type TestLinkDeleteArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the TestLink
    */
   omit?: Prisma.TestLinkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TestLinkInclude<ExtArgs> | null
   /**
    * Filter which TestLink to delete.
    */
@@ -1174,4 +1373,8 @@ export type TestLinkDefaultArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the TestLink
    */
   omit?: Prisma.TestLinkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TestLinkInclude<ExtArgs> | null
 }

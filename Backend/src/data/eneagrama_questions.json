@@ -1,0 +1,83 @@
+[
+  {
+    "id": "en1",
+    "text": "Em situações de conflito, eu costumo:",
+    "options": [
+      { "value": 1, "text": "Manter a calma e buscar a perfeição na solução." },
+      { "value": 8, "text": "Impor minha vontade e enfrentar o problema de frente." },
+      { "value": 9, "text": "Evitar o embate para manter a harmonia do grupo." }
+    ]
+  },
+  {
+    "id": "en2",
+    "text": "Eu me considero uma pessoa que:",
+    "options": [
+      { "value": 2, "text": "Gosta de ajudar os outros e ser útil." },
+      { "value": 5, "text": "Prefere observar e analisar as situações." },
+      { "value": 7, "text": "Busca novas experiências e diversão." }
+    ]
+  },
+  {
+    "id": "en3",
+    "text": "Quando recebo elogios, geralmente:",
+    "options": [
+      { "value": 3, "text": "Me sinto realizado e confiante." },
+      { "value": 6, "text": "Fico desconfiado e procuro entender o motivo." },
+      { "value": 9, "text": "Fico feliz, mas tento não demonstrar muito." }
+    ]
+  },
+  {
+    "id": "en4",
+    "text": "Em meu tempo livre, gosto de:",
+    "options": [
+      { "value": 4, "text": "Expressar minha criatividade e emoções." },
+      { "value": 7, "text": "Explorar coisas novas e me divertir." },
+      { "value": 1, "text": "Organizar e melhorar as coisas." }
+    ]
+  },
+  {
+    "id": "en5",
+    "text": "Eu costumo guardar minhas emoções para:",
+    "options": [
+      { "value": 5, "text": "Analisar com calma antes de agir." },
+      { "value": 8, "text": "Guardar para mim mesmo, não gosto de expor." },
+      { "value": 2, "text": "Compartilhar com quem confio." }
+    ]
+  },
+  {
+    "id": "en6",
+    "text": "Quando preciso tomar uma decisão importante:",
+    "options": [
+      { "value": 6, "text": "Busco conselhos e avalio todos os riscos." },
+      { "value": 3, "text": "Penso no que trará mais sucesso." },
+      { "value": 9, "text": "Tento evitar a responsabilidade." }
+    ]
+  },
+  {
+    "id": "en7",
+    "text": "Eu me sinto vivo quando:",
+    "options": [
+      { "value": 7, "text": "Estou planejando algo emocionante." },
+      { "value": 4, "text": "Estou expressando minha individualidade." },
+      { "value": 1, "text": "Estou corrigindo um erro ou melhorando algo." }
+    ]
+  },
+  {
+    "id": "en8",
+    "text": "Em discussões, eu geralmente:",
+    "options": [
+      { "value": 8, "text": "Defendo meu ponto de vista com firmeza." },
+      { "value": 2, "text": "Tento mediar e ajudar todos a se entenderem." },
+      { "value": 5, "text": "Observo e só falo se necessário." }
+    ]
+  },
+  {
+    "id": "en9",
+    "text": "Eu me preocupo muito com:",
+    "options": [
+      { "value": 9, "text": "A paz e harmonia ao meu redor." },
+      { "value": 3, "text": "Como os outros me veem profissionalmente." },
+      { "value": 6, "text": "O que pode dar errado no futuro." }
+    ]
+  }
+]

@@ -1,0 +1,102 @@
+[
+  {
+    "id": "q1",
+    "text": "Em um ambiente de trabalho, você se descreveria mais como:",
+    "options": [
+      { "value": "D", "text": "Decidido e focado em resultados." },
+      { "value": "I", "text": "Entusiasta e comunicativo." },
+      { "value": "S", "text": "Paciente e bom ouvinte." },
+      { "value": "C", "text": "Preciso e atento aos detalhes." }
+    ]
+  },
+  {
+    "id": "q2",
+    "text": "Ao enfrentar um problema difícil, sua tendência é:",
+    "options": [
+      { "value": "D", "text": "Assumir o controle e agir rápido." },
+      { "value": "I", "text": "Reunir as pessoas para trocar ideias." },
+      { "value": "S", "text": "Manter a calma e buscar estabilidade." },
+      { "value": "C", "text": "Analisar todos os fatos antes de decidir." }
+    ]
+  },
+  {
+    "id": "q3",
+    "text": "Em reuniões de equipe, você geralmente:",
+    "options": [
+      { "value": "D", "text": "Lidera a discussão e define o ritmo." },
+      { "value": "I", "text": "Motiva o grupo e compartilha ideias livremente." },
+      { "value": "S", "text": "Ouve atentamente e busca o consenso." },
+      { "value": "C", "text": "Observa, organiza as informações e cobra clareza." }
+    ]
+  },
+  {
+    "id": "q4",
+    "text": "Quando recebe uma tarefa nova, sua primeira reação é:",
+    "options": [
+      { "value": "D", "text": "Pensar em como fazer de forma rápida e eficiente." },
+      { "value": "I", "text": "Ficar animado e querer compartilhar a novidade." },
+      { "value": "S", "text": "Garantir que entende tudo para fazer corretamente." },
+      { "value": "C", "text": "Verificar os detalhes e planejar cada etapa." }
+    ]
+  },
+  {
+    "id": "q5",
+    "text": "Você se sente mais confortável quando:",
+    "options": [
+      { "value": "D", "text": "Tem controle sobre a situação e pode decidir sozinho." },
+      { "value": "I", "text": "Está rodeado de pessoas e interagindo com todos." },
+      { "value": "S", "text": "Segue uma rotina previsível e colabora com o grupo." },
+      { "value": "C", "text": "Tem tempo para analisar tudo com calma e precisão." }
+    ]
+  },
+  {
+    "id": "q6",
+    "text": "Ao lidar com prazos apertados, você:",
+    "options": [
+      { "value": "D", "text": "Foca no objetivo final e exige resultados." },
+      { "value": "I", "text": "Mantém o ânimo da equipe e busca soluções criativas." },
+      { "value": "S", "text": "Trabalha de forma consistente e ajuda os colegas." },
+      { "value": "C", "text": "Se preocupa com a qualidade e revisa tudo cuidadosamente." }
+    ]
+  },
+  {
+    "id": "q7",
+    "text": "Em situações de conflito, você tende a:",
+    "options": [
+      { "value": "D", "text": "Confrontar diretamente para resolver rápido." },
+      { "value": "I", "text": "Usar o diálogo para convencer e harmonizar." },
+      { "value": "S", "text": "Mediar e garantir que todos se sintam ouvidos." },
+      { "value": "C", "text": "Analisar os fatos para apontar a solução lógica." }
+    ]
+  },
+  {
+    "id": "q8",
+    "text": "Você prefere trabalhar:",
+    "options": [
+      { "value": "D", "text": "Sozinho, com autonomia total." },
+      { "value": "I", "text": "Em equipe, com muita interação." },
+      { "value": "S", "text": "Em um time estável e harmonioso." },
+      { "value": "C", "text": "Com tempo para planejar e executar com qualidade." }
+    ]
+  },
+  {
+    "id": "q9",
+    "text": "Sua maior força no ambiente profissional é:",
+    "options": [
+      { "value": "D", "text": "Determinação e foco em resultados." },
+      { "value": "I", "text": "Otimismo e capacidade de motivar." },
+      { "value": "S", "text": "Paciência e habilidade de ouvir." },
+      { "value": "C", "text": "Precisão e atenção aos detalhes." }
+    ]
+  },
+  {
+    "id": "q10",
+    "text": "Em um ambiente caótico, você:",
+    "options": [
+      { "value": "D", "text": "Toma a frente para organizar." },
+      { "value": "I", "text": "Tenta animar as pessoas e buscar soluções divertidas." },
+      { "value": "S", "text": "Mantém a calma e ajuda a manter a estabilidade." },
+      { "value": "C", "text": "Busca entender a causa raiz do problema." }
+    ]
+  }
+]
