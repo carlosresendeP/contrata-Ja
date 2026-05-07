@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { TestService } from '../services/testService';
 import { SubmitTestDTO, TestTokenParams } from '../schemas/testLink.schema';
+import { formatBR } from '@/config/dayjs';
 
 import discQuestions from '../data/disc_questions.json';
 import eneagramaQuestions from '../data/eneagrama_questions.json';
@@ -16,7 +17,7 @@ export class PublicTestController {
       ok: true,
       data: {
         candidate: link.application.candidate.nome,
-        expiresAt: link.expiresAt,
+        expiresAt: formatBR(link.expiresAt),
         questions: {
           disc: discQuestions,
           eneagrama: eneagramaQuestions,
