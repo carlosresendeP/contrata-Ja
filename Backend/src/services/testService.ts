@@ -7,11 +7,22 @@ import { calculateDisc } from '../logic/disc';
 import { calculateEneagrama } from '../logic/eneagrama';
 import { calculatePersonalities } from '../logic/personalities';
 import { SubmitTestDTO } from '../schemas/testLink.schema';
+import { emailService } from './emailService';
 
 export class TestService {
 
   //essa rota vai ser chamada no applicationController
   async createLink(applicationId: string) {
+    const application = await prisma.application.findUnique({
+      where: { id: applicationId },
+      include: {
+        candidate: true,
+        job: true,
+      },
+    });
+
+    if (!application) throw new AppError('Candidatura não encontrada', 404);
+
     const token = uuidv4();
     const expiresAt = new Date();
     expiresAt.setDate(expiresAt.getDate() + 2); // 2 dias
@@ -20,10 +31,18 @@ export class TestService {
       data: { token, applicationId, expiresAt },
     });
 
-    return {
-      url: `${env.APP_URL}/public/tests/${token}`,
-      expiresAt: formatBR(testLink.expiresAt),
-    };
+    const url = `${env.APP_URL}/public/tests/${token}`;
+    const expiresAtFormatted = formatBR(testLink.expiresAt);
+
+    await emailService.sendTestLink({
+      to: 'carlosale.paula2001@gmail.com',  //-> application.candidate.email
+      candidateName: application.candidate.nome,
+      jobTitle: application.job.titulo,
+      testUrl: url,
+      expiresAt: expiresAtFormatted,
+    });
+
+    return { url, expiresAt: expiresAtFormatted };
   }
 
   //essa rota vai ser chamada no publicTestController

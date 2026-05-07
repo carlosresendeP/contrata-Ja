@@ -12,6 +12,8 @@ const envShema = z.object({
     JWT_SECRET: z.string().min(10, "Secret Key required"),
     APP_URL: z.string().default("http://localhost:3001/api"),
     OPENAI_API_KEY: z.string().min(1, "OPENAI_API_KEY é obrigatória"),
+    RESEND_API_KEY: z.string().min(1, "RESEND_API_KEY é obrigatória"),
+    EMAIL_FROM: z.string().default("noreply@seudominio.com"),
 });
 
 const _env = envShema.safeParse(process.env) //safeparse é usado para validar o objeto de ambiente
