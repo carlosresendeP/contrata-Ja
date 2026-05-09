@@ -386,7 +386,14 @@ var JobService = class {
       throw new AppError("O sal\xE1rio deve ser um valor positivo.", 400);
     }
     try {
-      const job = await prisma.job.create({ data: { ...data, companyId } });
+      const job = await prisma.job.create({
+        data: {
+          ...data,
+          descricao: data.descricao ?? "",
+          // coluna NOT NULL — usa string vazia até a IA gerar o JD
+          companyId
+        }
+      });
       return {
         ...job,
         createdAt: formatBR(job.createdAt),
@@ -465,17 +472,23 @@ var JobController = class {
 var import_zod3 = require("zod");
 var createJobSchema = import_zod3.z.object({
   titulo: import_zod3.z.string().min(3, "O t\xEDtulo deve ter pelo menos 3 caracteres"),
-  descricao: import_zod3.z.string().min(10, "A descri\xE7\xE3o deve ser mais detalhada"),
+  descricao: import_zod3.z.string().optional(),
   requisitos: import_zod3.z.string().optional(),
-  salario: import_zod3.z.coerce.number().optional(),
-  status: import_zod3.z.enum(JobStatus).default("ABERTA")
+  salario: import_zod3.z.coerce.number().positive().optional(),
+  salaryMin: import_zod3.z.coerce.number().positive().optional(),
+  salaryMax: import_zod3.z.coerce.number().positive().optional(),
+  liderId: import_zod3.z.string().uuid().optional().nullable(),
+  status: import_zod3.z.nativeEnum(JobStatus).default("ABERTA")
 });
 var updateJobSchema = import_zod3.z.object({
   titulo: import_zod3.z.string().min(3).optional(),
-  descricao: import_zod3.z.string().min(10).optional(),
+  descricao: import_zod3.z.string().optional(),
   requisitos: import_zod3.z.string().optional(),
-  salario: import_zod3.z.coerce.number().optional(),
-  status: import_zod3.z.enum(JobStatus).optional()
+  salario: import_zod3.z.coerce.number().positive().optional(),
+  salaryMin: import_zod3.z.coerce.number().positive().optional(),
+  salaryMax: import_zod3.z.coerce.number().positive().optional(),
+  liderId: import_zod3.z.string().uuid().optional().nullable(),
+  status: import_zod3.z.nativeEnum(JobStatus).optional()
 });
 
 // src/Routes/job.routes.ts
@@ -953,6 +966,20 @@ var OrganogramaService = class {
       updatedAt: formatBR(newNode.updatedAt)
     };
   }
+  // atualizando um nó do organograma
+  async executeUpdate(id, data, companyId) {
+    const node = await prisma.organogramaNode.findFirst({ where: { id, companyId } });
+    if (!node) throw new AppError("N\xF3 n\xE3o encontrado", 404);
+    const updated = await prisma.organogramaNode.update({
+      where: { id },
+      data
+    });
+    return {
+      ...updated,
+      createdAt: formatBR(updated.createdAt),
+      updatedAt: formatBR(updated.updatedAt)
+    };
+  }
   async executeDelete(id, companyId) {
     const node = await prisma.organogramaNode.findFirst({ where: { id, companyId } });
     if (!node) throw new AppError("N\xF3 n\xE3o encontrado", 404);
@@ -975,6 +1002,10 @@ var OrganogramaController = class {
     this.create = async (req, reply) => {
       const data = await this.organogramaService.executeCreate(req.body, req.user.companyId);
       return reply.status(201).send({ ok: true, data });
+    };
+    this.update = async (req, reply) => {
+      const data = await this.organogramaService.executeUpdate(req.params.id, req.body, req.user.companyId);
+      return reply.send({ ok: true, data });
     };
     this.delete = async (req, reply) => {
       await this.organogramaService.executeDelete(req.params.id, req.user.companyId);
@@ -1003,6 +1034,11 @@ async function organogramaRoutes(app2) {
     "/",
     { preHandler: [validateSchema(organogramaSchema)] },
     organogramaController.create
+  );
+  app2.patch(
+    "/:id",
+    { preHandler: [validateSchema(paramsIdDTO, "params")] },
+    organogramaController.update
   );
   app2.delete(
     "/:id",
@@ -1520,18 +1556,32 @@ var ChatController = class {
     this.service = new ChatService();
     this.stream = async (req, reply) => {
       const { message, context } = req.body;
-      const textStream = await this.service.stream(message, context);
+      const origin = req.headers.origin;
+      if (origin) {
+        reply.raw.setHeader("Access-Control-Allow-Origin", origin);
+        reply.raw.setHeader("Vary", "Origin");
+      }
       reply.raw.setHeader("Content-Type", "text/event-stream");
       reply.raw.setHeader("Cache-Control", "no-cache");
       reply.raw.setHeader("Connection", "keep-alive");
       reply.raw.flushHeaders();
-      for await (const chunk of textStream) {
-        reply.raw.write(`data: ${JSON.stringify({ text: chunk })}
+      try {
+        const textStream = await this.service.stream(message, context);
+        for await (const chunk of textStream) {
+          reply.raw.write(`data: ${JSON.stringify({ text: chunk })}
 
 `);
+        }
+        reply.raw.write("data: [DONE]\n\n");
+      } catch (err) {
+        req.log.error(err, "Chat stream error");
+        reply.raw.write(`data: ${JSON.stringify({ text: "\n\n[Erro ao gerar resposta. Tente novamente.]" })}
+
+`);
+        reply.raw.write("data: [DONE]\n\n");
+      } finally {
+        reply.raw.end();
       }
-      reply.raw.write("data: [DONE]\n\n");
-      reply.raw.end();
     };
   }
 };
@@ -1552,6 +1602,126 @@ async function chatRoutes(fastify) {
   });
 }
 
+// src/services/PublicJobService.ts
+var PublicJobService = class {
+  async getJobByPublicToken(publicToken) {
+    const job = await prisma.job.findUnique({
+      where: { publicToken },
+      select: {
+        id: true,
+        titulo: true,
+        descricao: true,
+        jdGerada: true,
+        requisitos: true,
+        salaryMin: true,
+        salaryMax: true,
+        status: true,
+        company: {
+          select: {
+            nome: true,
+            razaoSocial: true,
+            logoUrl: true
+          }
+        }
+      }
+    });
+    if (!job) throw new AppError("Vaga n\xE3o encontrada ou link inv\xE1lido.", 404);
+    if (job.status === "FECHADA") {
+      throw new AppError("Esta vaga foi encerrada e n\xE3o est\xE1 mais aceitando candidaturas.", 410);
+    }
+    return job;
+  }
+};
+
+// src/controllers/PublicJobController.ts
+var publicJobService = new PublicJobService();
+var PublicJobController = class {
+  async getJob(req, reply) {
+    const { publicToken } = req.params;
+    const job = await publicJobService.getJobByPublicToken(publicToken);
+    return reply.send({ ok: true, data: job });
+  }
+};
+
+// src/services/UploadService.ts
+var import_path = __toESM(require("path"), 1);
+var import_fs = __toESM(require("fs"), 1);
+var import_crypto = require("crypto");
+var ALLOWED_TYPES = {
+  "application/pdf": ".pdf",
+  "image/png": ".png",
+  "image/jpeg": ".jpg",
+  "image/webp": ".webp",
+  "image/svg+xml": ".svg"
+};
+var REVERSE_TYPES = {
+  ".pdf": "application/pdf",
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".webp": "image/webp",
+  ".svg": "image/svg+xml"
+};
+var UploadService = class {
+  async processUpload(file) {
+    if (!file) throw new AppError("Nenhum arquivo enviado.", 400);
+    const ext = ALLOWED_TYPES[file.mimetype];
+    if (!ext) throw new AppError("Tipo n\xE3o suportado. Envie PDF, PNG, JPG, WebP ou SVG.", 400);
+    const uploadsDir = import_path.default.join(process.cwd(), "uploads");
+    if (!import_fs.default.existsSync(uploadsDir)) import_fs.default.mkdirSync(uploadsDir, { recursive: true });
+    const filename = `${(0, import_crypto.randomUUID)()}${ext}`;
+    const buffer = await file.toBuffer();
+    import_fs.default.writeFileSync(import_path.default.join(uploadsDir, filename), buffer);
+    const baseUrl = process.env.BASE_URL ?? "http://localhost:3001";
+    return { url: `${baseUrl}/api/public/uploads/${filename}` };
+  }
+  getFileStream(filename) {
+    const safeFilename = import_path.default.basename(filename);
+    const filePath = import_path.default.join(process.cwd(), "uploads", safeFilename);
+    if (!import_fs.default.existsSync(filePath)) throw new AppError("Arquivo n\xE3o encontrado.", 404);
+    const ext = import_path.default.extname(safeFilename).toLowerCase();
+    const contentType = REVERSE_TYPES[ext] || "application/octet-stream";
+    const stream = import_fs.default.createReadStream(filePath);
+    return { stream, safeFilename, contentType };
+  }
+};
+
+// src/controllers/UploadController.ts
+var uploadService = new UploadService();
+var UploadController = class {
+  async upload(req, reply) {
+    const file = await req.file();
+    const result = await uploadService.processUpload(file);
+    return reply.status(201).send({ ok: true, data: result });
+  }
+  async serveFile(req, reply) {
+    const { filename } = req.params;
+    const { stream, safeFilename, contentType } = uploadService.getFileStream(filename);
+    reply.header("Content-Type", contentType);
+    reply.header("Content-Disposition", `inline; filename="${safeFilename}"`);
+    return reply.send(stream);
+  }
+};
+
+// src/Routes/publicJob.routes.ts
+var publicJobController = new PublicJobController();
+var uploadController = new UploadController();
+async function publicJobRoutes(app2) {
+  app2.get(
+    "/:publicToken",
+    (req, reply) => publicJobController.getJob(req, reply)
+  );
+}
+async function uploadRoutes(app2) {
+  app2.post(
+    "/upload",
+    (req, reply) => uploadController.upload(req, reply)
+  );
+  app2.get(
+    "/uploads/:filename",
+    (req, reply) => uploadController.serveFile(req, reply)
+  );
+}
+
 // src/Routes/index.ts
 async function routes(fastify) {
   fastify.get("/health", async () => {
@@ -1568,11 +1738,14 @@ async function routes(fastify) {
   fastify.register(publicTestRoutes, { prefix: "/public/tests" });
   fastify.register(aiRoutes, { prefix: "/ai" });
   fastify.register(chatRoutes, { prefix: "/chat" });
+  fastify.register(publicJobRoutes, { prefix: "/public/jobs" });
+  fastify.register(uploadRoutes, { prefix: "/public" });
 }
 var Routes_default = routes;
 
 // src/app.ts
 var import_cors = __toESM(require("@fastify/cors"), 1);
+var import_multipart = __toESM(require("@fastify/multipart"), 1);
 var import_fastify_type_provider_zod = require("fastify-type-provider-zod");
 var import_zod10 = require("zod");
 var app = (0, import_fastify.default)({
@@ -1580,11 +1753,15 @@ var app = (0, import_fastify.default)({
     level: env.NODE_ENV === "dev" ? "info" : "error"
   }
 });
+app.register(import_multipart.default, {
+  limits: { fileSize: 5 * 1024 * 1024 }
+  // 5 MB
+});
 app.register(import_cors.default, {
   origin: true,
-  // Permitir todas as origens
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"]
-  // Métodos HTTP permitidos
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  exposedHeaders: ["Content-Type"]
 });
 app.setValidatorCompiler(import_fastify_type_provider_zod.validatorCompiler);
 app.setSerializerCompiler(import_fastify_type_provider_zod.serializerCompiler);

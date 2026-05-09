@@ -1,7 +1,8 @@
 "use client"
 
-import { useState, useRef, KeyboardEvent, useEffect } from "react"
-import { Building2, ImageIcon, Rocket, TrendingUp, Landmark, Briefcase, Save, X, Plus, User, CreditCard, Crown } from "lucide-react"
+import { useState, useRef, KeyboardEvent } from "react"
+import { useForm, useWatch } from "react-hook-form"
+import { Building2, ImageIcon, Rocket, TrendingUp, Landmark, Briefcase, Save, X, Plus, User, CreditCard, Crown, Upload, Loader2 } from "lucide-react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
@@ -10,9 +11,11 @@ import { Label } from "@/components/ui/label"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
+import Image from "next/image"
 import { useCompany } from "@/hooks/useCompany"
 import { useAuthStore } from "@/store/auth.store"
 import { companyService } from "@/services/company.service"
+import { publicService } from "@/services/public.service"
 import { cn } from "@/lib/utils"
 
 // ─── Perfil de Ritmo ──────────────────────────────────────────────────────────
@@ -66,31 +69,52 @@ function EmpresaTab() {
   const queryClient = useQueryClient()
   const { data: company, isLoading } = useCompany()
 
-  const [nome, setNome] = useState("")
-  const [razaoSocial, setRazaoSocial] = useState("")
-  const [logoUrl, setLogoUrl] = useState("")
-  const [valores, setValores] = useState<string[]>([])
-  const [perfilRitmo, setPerfilRitmo] = useState("")
-  const [novoValor, setNovoValor] = useState("")
-  const valorInputRef = useRef<HTMLInputElement>(null)
+  // values= sincroniza automaticamente quando company chega — sem useEffect
+  const { control, setValue, reset } = useForm({
+    values: {
+      nome:        company?.nome        ?? "",
+      razaoSocial: company?.razaoSocial ?? "",
+      logoUrl:     company?.logoUrl     ?? "",
+      valores:     company?.valores     ?? [] as string[],
+      perfilRitmo: company?.perfilRitmo ?? "",
+    },
+  })
 
-  useEffect(() => {
-    if (!company) return
-    setNome(company.nome ?? "")
-    setRazaoSocial(company.razaoSocial ?? "")
-    setLogoUrl(company.logoUrl ?? "")
-    setValores(company.valores ?? [])
-    setPerfilRitmo(company.perfilRitmo ?? "")
-  }, [company])
+  const nome        = useWatch({ control, name: "nome" })
+  const razaoSocial = useWatch({ control, name: "razaoSocial" })
+  const logoUrl     = useWatch({ control, name: "logoUrl" })
+  const valores     = useWatch({ control, name: "valores" })
+  const perfilRitmo = useWatch({ control, name: "perfilRitmo" })
+
+  const [novoValor, setNovoValor] = useState("")
+  const [isUploading, setIsUploading] = useState(false)
+  const valorInputRef = useRef<HTMLInputElement>(null)
+  const fileInputRef  = useRef<HTMLInputElement>(null)
+
+  async function handleLogoFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setIsUploading(true)
+    try {
+      const url = await publicService.uploadFile(file)
+      setValue("logoUrl", url)
+      toast.success("Logo enviado com sucesso!")
+    } catch {
+      toast.error("Erro ao enviar imagem. Tente novamente.")
+    } finally {
+      setIsUploading(false)
+      e.target.value = ""
+    }
+  }
 
   const updateMutation = useMutation({
     mutationFn: () =>
       companyService.update({
-        nome: nome.trim() || undefined,
+        nome:        nome.trim()        || undefined,
         razaoSocial: razaoSocial.trim() || undefined,
-        logoUrl: logoUrl.trim() || undefined,
+        logoUrl:     logoUrl.trim()     || undefined,
         valores,
-        perfilRitmo: perfilRitmo || undefined,
+        perfilRitmo: perfilRitmo        || undefined,
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["company"] })
@@ -102,13 +126,13 @@ function EmpresaTab() {
   function addValor() {
     const v = novoValor.trim()
     if (!v || valores.includes(v)) return
-    setValores((prev) => [...prev, v])
+    setValue("valores", [...valores, v])
     setNovoValor("")
     valorInputRef.current?.focus()
   }
 
   function removeValor(v: string) {
-    setValores((prev) => prev.filter((x) => x !== v))
+    setValue("valores", valores.filter((x) => x !== v))
   }
 
   function handleValorKeyDown(e: KeyboardEvent<HTMLInputElement>) {
@@ -119,12 +143,7 @@ function EmpresaTab() {
   }
 
   function handleCancel() {
-    if (!company) return
-    setNome(company.nome ?? "")
-    setRazaoSocial(company.razaoSocial ?? "")
-    setLogoUrl(company.logoUrl ?? "")
-    setValores(company.valores ?? [])
-    setPerfilRitmo(company.perfilRitmo ?? "")
+    reset()
   }
 
   if (isLoading) {
@@ -147,26 +166,50 @@ function EmpresaTab() {
         <div className="flex gap-4 items-center">
           <div className="size-24 rounded-xl border border-border bg-muted flex items-center justify-center overflow-hidden shrink-0">
             {logoUrl ? (
-              <img src={logoUrl} alt="Logo" className="w-full h-full object-contain p-2" />
+              <Image src={logoUrl} alt="Logo" width={96} height={96} className="w-full h-full object-contain p-2" unoptimized />
             ) : (
               <Building2 className="size-8 text-muted-foreground" />
             )}
           </div>
-          <div className="flex-1 space-y-1.5">
-            <Label htmlFor="logoUrl" className="text-xs uppercase tracking-widest text-muted-foreground">
-              URL do Logotipo
-            </Label>
-            <div className="relative">
-              <ImageIcon className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
-              <Input
-                id="logoUrl"
-                value={logoUrl}
-                onChange={(e) => setLogoUrl(e.target.value)}
-                placeholder="https://sua-empresa.com/logo.png"
-                className="pl-10"
-              />
+          <div className="flex-1 space-y-2">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/png,image/jpeg,image/webp,image/svg+xml"
+              className="hidden"
+              onChange={handleLogoFileSelect}
+            />
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="gap-2 w-full sm:w-auto"
+              disabled={isUploading}
+              onClick={() => fileInputRef.current?.click()}
+            >
+              {isUploading ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                <Upload className="size-4" />
+              )}
+              {isUploading ? "Enviando..." : "Fazer upload"}
+            </Button>
+            <div className="space-y-1.5">
+              <Label htmlFor="logoUrl" className="text-xs uppercase tracking-widest text-muted-foreground">
+                Ou cole uma URL
+              </Label>
+              <div className="relative">
+                <ImageIcon className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
+                <Input
+                  id="logoUrl"
+                  value={logoUrl}
+                  onChange={(e) => setValue("logoUrl", e.target.value)}
+                  placeholder="https://sua-empresa.com/logo.png"
+                  className="pl-10"
+                />
+              </div>
+              <p className="text-xs text-muted-foreground">PNG, JPG, WebP ou SVG · máx. 5 MB</p>
             </div>
-            <p className="text-xs text-muted-foreground">Cole a URL de uma imagem PNG, JPG ou SVG.</p>
           </div>
         </div>
       </section>
@@ -186,7 +229,7 @@ function EmpresaTab() {
             <Input
               id="nome"
               value={nome}
-              onChange={(e) => setNome(e.target.value)}
+              onChange={(e) => setValue("nome", e.target.value)}
               placeholder="Ex: MakerStack RH"
             />
           </div>
@@ -197,7 +240,7 @@ function EmpresaTab() {
             <Input
               id="razaoSocial"
               value={razaoSocial}
-              onChange={(e) => setRazaoSocial(e.target.value)}
+              onChange={(e) => setValue("razaoSocial", e.target.value)}
               placeholder="MakerStack Tecnologia LTDA"
             />
           </div>
@@ -274,7 +317,7 @@ function EmpresaTab() {
               <button
                 key={p.value}
                 type="button"
-                onClick={() => setPerfilRitmo(selected ? "" : p.value)}
+                onClick={() => setValue("perfilRitmo", selected ? "" : p.value)}
                 className={cn(
                   "flex items-start gap-3 p-4 rounded-xl border text-left transition-all",
                   selected

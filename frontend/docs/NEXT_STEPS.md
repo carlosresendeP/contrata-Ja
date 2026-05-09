@@ -326,25 +326,178 @@ app/teste/[token]/
 
 ---
 
-## Visão Geral — Estimativa
+---
 
-| Etapa                    | Complexidade | Tempo estimado |
-| ------------------------ | ------------ | -------------- |
-| 1 — Deps                 | Baixa        | 5 min          |
-| 2 — Lib                  | Baixa        | 30 min         |
-| 3 — Store Auth           | Baixa        | 20 min         |
-| 4 — Providers            | Baixa        | 15 min         |
-| 5 — Auth pages           | Média        | 45 min         |
-| 6 — App shell            | Média        | 1h             |
-| 7 — Onboarding           | Alta         | 2h             |
-| 8 — Dashboard            | Média        | 45 min         |
-| 9 — Vagas                | Alta         | 3h             |
-| 10 — Organograma         | Média        | 1.5h           |
-| 11 — Chat                | Média        | 1h             |
-| 12 — Config              | Baixa        | 45 min         |
-| 13 — Portal candidato    | Alta         | 2h             |
-| 14 — Pipeline candidatos | Média        | 1h             |
-| **Total**                |              | **~15h**       |
+## Fase 2 — Melhorias pós-MVP
+
+> MVP entregue. As etapas abaixo são melhorias de qualidade, UX e infra.
+> Ordem sugerida: priorize as que impactam diretamente o uso diário.
+
+---
+
+### Etapa 16 — Upload real de logo nas Configurações
+
+```
+app/(app)/configuracoes/page.tsx  →  seção "Logotipo da Empresa"
+backend/src/Routes/publicJob.routes.ts  →  rota POST /public/upload (já existe)
+```
+
+Hoje a logo é salva como URL digitada manualmente. Substituir por upload de arquivo:
+
+- Adicionar `<input type="file" accept="image/*">` oculto
+- Ao selecionar: `POST /api/public/upload` com o arquivo (reutiliza endpoint de currículo)
+  - Backend já aceita `application/pdf`; **atualizar** para aceitar também `image/png`, `image/jpeg`, `image/svg+xml`
+- Retorna URL → `setValue("logoUrl", url)` → preview atualiza em tempo real
+- Exibir barra de progresso durante o upload (mesmo padrão do portal de candidatura)
+- Manter input de URL manual como fallback ("ou cole uma URL")
+
+**Mudança necessária no backend** (`publicJob.routes.ts`):
+```ts
+// Alterar validação de mimetype:
+const allowed = ["application/pdf", "image/png", "image/jpeg", "image/svg+xml", "image/webp"]
+if (!allowed.includes(file.mimetype)) throw new AppError("Tipo de arquivo não suportado.", 400)
+```
+
+---
+
+### Etapa 17 — Contexto da Empresa nas Configurações
+
+```
+app/(app)/configuracoes/page.tsx  →  nova seção na aba "Empresa"
+```
+
+O campo `contextoEmpresa` (Prisma: `String? @db.Text`) é crítico para a qualidade
+do match de IA mas não tem UI. Adicionar na aba Empresa:
+
+- Textarea de texto livre com contador de palavras (mínimo recomendado: 100)
+- Label: "Descreva o momento atual da sua empresa"
+- Placeholder com exemplo guiado
+- Indicador visual: cinza < 50 palavras / amarelo 50–99 / verde ≥ 100
+- Salvo junto com os outros campos no `PATCH /company`
+
+---
+
+### Etapa 18 — E-mails Automáticos (Resend)
+
+```
+backend/src/services/emailService.ts  →  novo
+backend/src/services/ApplicationService.ts  →  chamar após apply()
+backend/src/services/testService.ts  →  chamar após submit()
+```
+
+Instalar: `pnpm add resend` (backend)
+
+Eventos prioritários:
+1. **Candidato se inscreve** → e-mail para o RH: "Nova candidatura — {nome} para {vaga}"
+2. **Testes concluídos** → e-mail para o RH: "{nome} concluiu os testes — ver relatório"
+3. **Link de testes gerado** → e-mail para o candidato com o link (atualmente só é copiado)
+
+Variáveis de ambiente necessárias:
+```
+RESEND_API_KEY=re_...
+EMAIL_FROM=noreply@suaempresa.com
+```
+
+---
+
+### Etapa 19 — Página de Detalhe do Candidato
+
+```
+app/(app)/candidatos/[id]/page.tsx  →  novo
+```
+
+Hoje existe `/candidatos` (kanban) mas clicar num card abre `/vagas/[id]`, não o perfil do candidato.
+Criar página dedicada ao candidato:
+
+- Header: nome, e-mail, telefone, data de candidatura
+- Badge de status atual com histórico de movimentações
+- Resultados dos testes (DISC, Eneagrama, 16P) em cards visuais
+- Link para baixar currículo (se `curriculoUrl` existe)
+- Match score + resumo IA (se análise foi gerada)
+- Botão "Ver Vaga" → `/vagas/[jobId]`
+
+---
+
+### Etapa 20 — Refresh Token & Segurança de Sessão
+
+```
+lib/api.ts  →  interceptor de resposta
+backend/src/Routes/auth.routes.ts  →  rota POST /refresh
+```
+
+Hoje o token JWT expira e o usuário é redirecionado para login sem aviso.
+Implementar refresh silencioso:
+
+- Backend: `POST /auth/refresh` recebe `refreshToken` (cookie httpOnly), retorna novo `accessToken`
+- Frontend: interceptor Axios captura 401 → tenta refresh → reenvia request original
+- Se refresh falha → `clearAuth()` + redirect `/login`
+- Armazenar `refreshToken` em cookie httpOnly (não localStorage)
+
+---
+
+### Etapa 21 — Dashboard Analytics
+
+```
+app/(app)/dashboard/page.tsx  →  melhorar KPIs
+backend/src/Routes/  →  nova rota GET /company/stats
+```
+
+Melhorar o dashboard atual com métricas reais:
+
+- Tempo médio de contratação por vaga (dias entre criação e APROVADO)
+- Taxa de conversão por etapa do funil (% que avança de cada status)
+- Gráfico de candidaturas por semana (sparkline simples)
+- Top 3 vagas com mais candidatos
+- Vagas sem candidatos há mais de 7 dias (alerta)
+
+---
+
+### Etapa 22 — BullMQ (Filas para IA em Background)
+
+```
+backend/src/queues/  →  novo diretório
+backend/src/worker.ts  →  processo separado
+```
+
+Instalar: `pnpm add bullmq ioredis` (backend)  
+Requer: Redis rodando (`docker run -p 6379:6379 redis` ou Railway Redis)
+
+Quando implementar: quando o `generateMatch` ou `generateJd` demorar > 30s ou
+quando houver múltiplos usuários simultâneos.
+
+Fluxo:
+1. `POST /ai/jobs/:id/match` → enfileira job → retorna `{ jobId, status: "processing" }`
+2. Worker processa em background (sem bloquear request)
+3. Frontend faz polling `GET /ai/jobs/:id/match/status` a cada 3s
+4. Quando `status: "done"` → invalida query e mostra resultado
+
+Variáveis necessárias:
+```
+REDIS_URL=redis://localhost:6379
+```
+
+
+
+20
+NO BACKEND CRIAR AS ROTAS DO PUBLIC CORRETAMENTE 
+POIS TA TUDO DENTRO DO ROTS CRIAR O SERVICES, CONTROLLER ETC
+NAO ESTAO SEPARADOS CORRETAMENTE.
+
+
+---
+
+## Visão Geral — Estimativa Fase 2
+
+| Etapa | Descrição                        | Complexidade | Tempo est. |
+| ----- | -------------------------------- | ------------ | ---------- |
+| 16    | Upload real de logo              | Baixa        | 30 min     |
+| 17    | Contexto da empresa              | Baixa        | 20 min     |
+| 18    | E-mails automáticos (Resend)     | Média        | 2h         |
+| 19    | Detalhe do candidato             | Média        | 1.5h       |
+| 20    | Refresh token & sessão segura    | Média        | 2h         |
+| 21    | Dashboard analytics              | Média        | 2h         |
+| 22    | BullMQ (filas IA background)     | Alta         | 3h         |
+| **Total** |                             |              | **~11h**   |
 
 ---
 

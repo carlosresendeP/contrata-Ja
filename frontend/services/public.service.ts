@@ -35,6 +35,15 @@ export const publicService = {
     return data.data.url as string
   },
 
+  uploadFile: async (file: File): Promise<string> => {
+    const formData = new FormData()
+    formData.append("file", file)
+    const { data } = await publicApi.post("/public/upload", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+    return data.data.url as string
+  },
+
   apply: async (body: {
     jobId: string
     nome: string
